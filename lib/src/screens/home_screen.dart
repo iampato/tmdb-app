@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:tmdb_app/src/screens/list_movies_screen.dart';
 import 'package:tmdb_app/src/utils/adapt.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -18,6 +19,7 @@ class HomeScreen extends StatelessWidget {
                   CachedNetworkImage(
                     imageUrl: "https://picsum.photos/600",
                     height: double.infinity,
+                    width: double.infinity,
                     fit: BoxFit.cover,
                   ),
                   Container(
@@ -87,10 +89,11 @@ class HomeScreen extends StatelessWidget {
                                   horizontal: Adapt.setWidth(10),
                                   vertical: Adapt.setWidth(5),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   "THRILLER",
                                   style: TextStyle(
                                     color: Colors.white54,
+                                    fontSize: Adapt.sp(10),
                                   ),
                                 ),
                               ),
@@ -108,10 +111,11 @@ class HomeScreen extends StatelessWidget {
                                   horizontal: Adapt.setWidth(10),
                                   vertical: Adapt.setWidth(5),
                                 ),
-                                child: const Text(
+                                child: Text(
                                   "ACTION",
                                   style: TextStyle(
                                     color: Colors.white54,
+                                    fontSize: Adapt.sp(10),
                                   ),
                                 ),
                               )
@@ -159,7 +163,12 @@ class HomeScreen extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.pushNamed(
+                        context,
+                        ListMoviesScreen.routeName,
+                      );
+                    },
                     child: const Text("SEE ALL"),
                   ),
                 ],
