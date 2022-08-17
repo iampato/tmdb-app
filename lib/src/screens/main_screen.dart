@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tmdb_app/src/screens/bookmarks_screen.dart';
 import 'package:tmdb_app/src/screens/home_screen.dart';
+import 'package:tmdb_app/src/screens/profile_screen.dart';
+import 'package:tmdb_app/src/screens/search_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -10,15 +13,31 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
+  int _currentIndex = 0;
+
+  void _changeIndex(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: IndexedStack(
-        index: 0,
-        children: const [HomeScreen()],
+        index: _currentIndex,
+        children: const [
+          HomeScreen(),
+          SearchScreen(),
+          BookmarksScreen(),
+          ProfileScreen(),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
         backgroundColor: Colors.transparent,
+        onTap: _changeIndex,
+        currentIndex: _currentIndex,
         elevation: 0,
         items: const [
           BottomNavigationBarItem(
@@ -30,22 +49,14 @@ class _MainScreenState extends State<MainScreen> {
             label: 'Search',
           ),
           BottomNavigationBarItem(
+            icon: Icon(Icons.bookmark_outline),
+            label: 'Bookmarks',
+          ),
+          BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: 'Profile',
           ),
         ],
-        currentIndex: 0,
-        onTap: (index) {
-          setState(() {
-            if (index == 0) {
-              // Home
-            } else if (index == 1) {
-              // Search
-            } else if (index == 2) {
-              // Profile
-            }
-          });
-        },
       ),
     );
   }
