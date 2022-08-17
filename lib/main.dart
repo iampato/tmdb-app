@@ -3,18 +3,15 @@ import 'dart:io';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:tmdb_app/src/di/setup_providers.dart';
+import 'package:tmdb_app/src/utils/cubit_observer.dart';
 import 'package:tmdb_app/tmdb.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // BlocOverrides.runZoned(
-  //   () {},
-  //   // blocObserver: MyBlocObserver(),
-  // );
+  Bloc.observer = MyBlocObserver();
   HydratedBlocOverrides.runZoned(
     () {},
     storage: await HydratedStorage.build(
