@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tmdb_app/src/screens/bookmarks_screen.dart';
 import 'package:tmdb_app/src/screens/home_screen.dart';
-import 'package:tmdb_app/src/screens/profile_screen.dart';
 import 'package:tmdb_app/src/screens/search_screen.dart';
 
 class MainScreen extends StatefulWidget {
@@ -30,7 +29,6 @@ class _MainScreenState extends State<MainScreen> {
           HomeScreen(),
           SearchScreen(),
           BookmarksScreen(),
-          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -51,10 +49,6 @@ class _MainScreenState extends State<MainScreen> {
           BottomNavigationBarItem(
             icon: Icon(Icons.bookmark_outline),
             label: 'Bookmarks',
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
-            label: 'Profile',
           ),
         ],
       ),
