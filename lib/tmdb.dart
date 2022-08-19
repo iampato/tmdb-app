@@ -5,7 +5,7 @@ import 'package:responsive_framework/responsive_framework.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:tmdb_app/src/cubit/theme/theme_cubit.dart';
 import 'package:tmdb_app/src/utils/app_router.dart';
-import 'package:tmdb_app/src/utils/color_pallete.dart';
+import 'package:tmdb_app/src/styles/theme.dart';
 
 class MyApp extends StatefulWidget {
   const MyApp({Key? key}) : super(key: key);

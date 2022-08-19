@@ -2,7 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tmdb_app/src/screens/detail_movie_screen.dart';
-import 'package:tmdb_app/src/utils/adapt.dart';
+import 'package:tmdb_app/src/styles/adapt.dart';
 
 class ListMoviesScreen extends StatelessWidget {
   const ListMoviesScreen({Key? key}) : super(key: key);

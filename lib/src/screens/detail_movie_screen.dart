@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tmdb_app/src/utils/adapt.dart';
+import 'package:tmdb_app/src/styles/adapt.dart';
 
 class DetailMovieScreen extends StatelessWidget {
   const DetailMovieScreen({Key? key}) : super(key: key);
