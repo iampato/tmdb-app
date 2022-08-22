@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:tmdb_app/src/screens/detail_movie_screen.dart';
+import 'package:tmdb_app/src/screens/list_movies_screen.dart';
 import 'package:tmdb_app/src/screens/main_screen.dart';
 import 'package:tmdb_app/src/utils/page_route_transition.dart';
 
@@ -22,6 +24,16 @@ class AppRouter {
         return _route(
           const MainScreen(),
           RouteAnimation.fade,
+        );
+      case ListMoviesScreen.routeName:
+        return _route(
+          const ListMoviesScreen(),
+          RouteAnimation.slideUp,
+        );
+      case DetailMovieScreen.routeName:
+        return _route(
+          const DetailMovieScreen(),
+          RouteAnimation.none,
         );
 
       default:
@@ -63,6 +75,10 @@ class AppRouter {
       );
     } else if (animation == RouteAnimation.fadeScale) {
       return PageRoutes.fadeScale(
+        () => page,
+      );
+    } else if (animation == RouteAnimation.slide) {
+      return PageRoutes.slide(
         () => page,
       );
     } else {
