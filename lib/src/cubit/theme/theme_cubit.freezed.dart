@@ -300,7 +300,7 @@ class _$_Loaded implements _Loaded {
 abstract class _Loaded implements ThemeState {
   const factory _Loaded({required final int theme}) = _$_Loaded;
 
-  int get theme => throw _privateConstructorUsedError;
+  int get theme;
   @JsonKey(ignore: true)
   _$$_LoadedCopyWith<_$_Loaded> get copyWith =>
       throw _privateConstructorUsedError;
