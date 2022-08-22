@@ -39,7 +39,7 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   _onUpdateScroll(ScrollMetrics metrics) {
-    debugPrint("UPDATE SCROLL");
+    // debugPrint("UPDATE SCROLL");
   }
 
   _onEndScroll(ScrollMetrics metrics) {
@@ -77,7 +77,10 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Stack(
         children: [
-          const HomeBackdrop(height: 350),
+          HomeBackdrop(
+            height: 350,
+            scrollController: _scrollController,
+          ),
           NotificationListener<ScrollNotification>(
             onNotification: (scrollNotification) {
               if (scrollNotification is ScrollStartNotification) {

@@ -4,10 +4,45 @@ import 'package:flutter/services.dart';
 import 'package:tmdb_app/src/screens/detail_movie_screen.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 
-class ListMoviesScreen extends StatelessWidget {
+class ListMoviesScreen extends StatefulWidget {
   const ListMoviesScreen({Key? key}) : super(key: key);
 
   static const routeName = "/list-movies";
+
+  @override
+  State<ListMoviesScreen> createState() => _ListMoviesScreenState();
+}
+
+class _ListMoviesScreenState extends State<ListMoviesScreen> {
+  /*
+    final _scrollThreshold = 200.0;
+
+  @override
+  void initState() {
+    props.scrollController.addListener(_scrollListener);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    try {
+      props.scrollController.removeListener(_scrollListener);
+    } catch (e) {
+      Logger().e(e);
+    }
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    final maxScroll = props.scrollController.position.maxScrollExtent;
+    final currentScroll = props.scrollController.position.pixels;
+    if (maxScroll - currentScroll <= _scrollThreshold) {
+      // fetch more data
+      props.fetchMore();
+    }
+  }
+
+  */
   @override
   Widget build(BuildContext context) {
     return Scaffold(

@@ -5,9 +5,11 @@ import 'package:tmdb_app/src/styles/adapt.dart';
 
 class HomeBackdrop extends StatefulWidget {
   final double height;
+  final ScrollController scrollController;
   const HomeBackdrop({
     Key? key,
     required this.height,
+    required this.scrollController,
   }) : super(key: key);
 
   @override
@@ -15,18 +17,48 @@ class HomeBackdrop extends StatefulWidget {
 }
 
 class _HomeBackdropState extends State<HomeBackdrop> {
+  ScrollController get _controller => widget.scrollController;
   double get _height => widget.height;
+  double _scale = 1.0;
+  double _offset = 0;
+
+  @override
+  void initState() {
+    _controller.addListener(_imageScroll);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.removeListener(_imageScroll);
+    super.dispose();
+  }
+
+  void _imageScroll() {
+    double currentOffset = _controller.offset;
+    if (currentOffset <= _height) {
+      double ratio = (currentOffset / _height) / 2.58; //2.25;
+      setState(() {
+        _scale = 1 + ratio;
+        _offset = currentOffset / _height;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: Adapt.setHeight(_height),
       child: Stack(
         children: [
-          CachedNetworkImage(
-            imageUrl: "https://picsum.photos/600",
-            height: double.infinity,
-            width: double.infinity,
-            fit: BoxFit.cover,
+          Transform.scale(
+            scale: _scale,
+            child: CachedNetworkImage(
+              imageUrl: "https://picsum.photos/600",
+              height: double.infinity,
+              width: double.infinity,
+              fit: BoxFit.cover,
+            ),
           ),
           Container(
             decoration: BoxDecoration(
@@ -35,98 +67,116 @@ class _HomeBackdropState extends State<HomeBackdrop> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Adapt.setWidth(15),
+                Transform.translate(
+                  offset: Offset(
+                    (_offset * 10) * -Adapt.setWidth(30),
+                    0,
                   ),
-                  child: Text(
-                    "Murder on the orient express",
-                    style: TextStyle(
-                      fontSize: Adapt.sp(28),
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w700,
-                      height: 0.95,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(15),
+                    ),
+                    child: Text(
+                      "Murder on the orient express",
+                      style: TextStyle(
+                        fontSize: Adapt.sp(28),
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w700,
+                        height: 0.95,
+                      ),
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Adapt.setWidth(15),
-                    vertical: Adapt.setHeight(10),
+                Transform.translate(
+                  offset: Offset(
+                    (_offset * 10) * Adapt.setWidth(50),
+                    0,
                   ),
-                  child: Row(
-                    children: [
-                      Row(
-                        children: [1, 2, 4, 3, 5].map((e) {
-                          return const Icon(
-                            Icons.star,
-                            size: 20,
-                            color: Colors.red,
-                          );
-                        }).toList(),
-                      ),
-                      SizedBox(
-                        width: Adapt.setWidth(10),
-                      ),
-                      Text(
-                        "189 Reviews",
-                        style: TextStyle(
-                          fontSize: Adapt.sp(14.5),
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w700,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(15),
+                      vertical: Adapt.setHeight(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Row(
+                          children: [1, 2, 4, 3, 5].map((e) {
+                            return const Icon(
+                              Icons.star,
+                              size: 20,
+                              color: Colors.red,
+                            );
+                          }).toList(),
                         ),
-                      ),
-                    ],
+                        SizedBox(
+                          width: Adapt.setWidth(10),
+                        ),
+                        Text(
+                          "189 Reviews",
+                          style: TextStyle(
+                            fontSize: Adapt.sp(14.5),
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w700,
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Adapt.setWidth(15),
+                Transform.translate(
+                  offset: Offset(
+                    0,
+                    (_offset * 10) * Adapt.setHeight(50),
                   ),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white54,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white54,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
                           ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Adapt.setWidth(10),
-                          vertical: Adapt.setWidth(5),
-                        ),
-                        child: Text(
-                          "THRILLER",
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: Adapt.sp(10),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Adapt.setWidth(10),
+                            vertical: Adapt.setWidth(5),
                           ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: Adapt.setWidth(10),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white54,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Adapt.setWidth(10),
-                          vertical: Adapt.setWidth(5),
-                        ),
-                        child: Text(
-                          "ACTION",
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: Adapt.sp(10),
+                          child: Text(
+                            "THRILLER",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: Adapt.sp(10),
+                            ),
                           ),
                         ),
-                      )
-                    ],
+                        SizedBox(
+                          width: Adapt.setWidth(10),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white54,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Adapt.setWidth(10),
+                            vertical: Adapt.setWidth(5),
+                          ),
+                          child: Text(
+                            "ACTION",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: Adapt.sp(10),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(
