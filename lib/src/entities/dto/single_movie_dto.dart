@@ -19,8 +19,10 @@ class SingleMovieDto with _$SingleMovieDto {
     String? overview,
     double? popularity,
     @JsonKey(name: 'poster_path') String? posterPath,
-    @JsonKey(name: 'production_companies') List<ProductionCompany>? productionCompanies,
-    @JsonKey(name: 'production_countries') List<ProductionCountry>? productionCountries,
+    @JsonKey(name: 'production_companies')
+        List<ProductionCompany>? productionCompanies,
+    @JsonKey(name: 'production_countries')
+        List<ProductionCountry>? productionCountries,
     @JsonKey(name: 'release_date') DateTime? releaseDate,
     int? revenue,
     int? runtime,

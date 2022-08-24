@@ -16,12 +16,11 @@ Widget setupProviders(Widget child) {
           )..decideOnTheme();
         },
       ),
-       // Popular movies
+      // Popular movies
       BlocProvider(
         create: (context) {
           return UpcomingMoviesCubit(
-            movieRepository:
-                RepositoryProvider.of<MovieRepository>(context),
+            movieRepository: RepositoryProvider.of<MovieRepository>(context),
           )..getUpcomingMovies();
         },
       ),

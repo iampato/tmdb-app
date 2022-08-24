@@ -21,5 +21,6 @@ class CastDto with _$CastDto {
     String? job,
   }) = _CastDto;
 
-  factory CastDto.fromJson(Map<String, dynamic> json) => _$CastDtoFromJson(json);
+  factory CastDto.fromJson(Map<String, dynamic> json) =>
+      _$CastDtoFromJson(json);
 }
