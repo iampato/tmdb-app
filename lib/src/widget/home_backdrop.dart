@@ -63,7 +63,7 @@ class _HomeBackdropState extends State<HomeBackdrop> {
             orElse: () {},
             success: (movies, __) {
               _timer = Timer.periodic(
-                const Duration(milliseconds: 15000),
+                const Duration(seconds: 15),
                 (_) {
                   if (_index != movies.results?.length) {
                     setState(() {
