@@ -154,7 +154,7 @@ class MovieRepository {
         endpoint,
       );
       if (response.statusCode == 200) {
-        final movies = SimiliarMoviesDto.fromJson(response.data);
+        final movies = MovieDto.fromJson(response.data);
         return movies;
       } else {
         return null;
