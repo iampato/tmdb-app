@@ -66,7 +66,6 @@ class MovieRepository {
     }
   }
 
-  // similiar
   // top rated
   Future<MovieDto?> topRateMovies({int page = 1}) async {
     String endpoint =
@@ -143,6 +142,7 @@ class MovieRepository {
     }
   }
 
+  // similiar
   Future<MovieDto?> similiarMovies({
     required int page,
     required int movieId,
@@ -155,6 +155,28 @@ class MovieRepository {
       );
       if (response.statusCode == 200) {
         final movies = SimiliarMoviesDto.fromJson(response.data);
+        return movies;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // search
+  Future<MovieDto?> searchMovies({
+    required int page,
+    required String query,
+  }) async {
+    String endpoint =
+        "/search/movie?api_key=${AppConfig.getConfig().apiKey}&language=en-US&query=$query&page=$page";
+    try {
+      Response response = await _httpNetworkUtil.getRequest(
+        endpoint,
+      );
+      if (response.statusCode == 200) {
+        final movies = MovieDto.fromJson(response.data);
         return movies;
       } else {
         return null;
