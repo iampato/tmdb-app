@@ -3,7 +3,7 @@
 // ignore_for_file: type=lint
 // ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides, invalid_annotation_target
 
-part of 'top_rated_dto.dart';
+part of 'movie_dto.dart';
 
 // **************************************************************************
 // FreezedGenerator
@@ -14,12 +14,12 @@ T _$identity<T>(T value) => value;
 final _privateConstructorUsedError = UnsupportedError(
     'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more information: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
 
-TopRatedDto _$TopRatedDtoFromJson(Map<String, dynamic> json) {
-  return _TopRatedDto.fromJson(json);
+MovieDto _$MovieDtoFromJson(Map<String, dynamic> json) {
+  return _MovieDto.fromJson(json);
 }
 
 /// @nodoc
-mixin _$TopRatedDto {
+mixin _$MovieDto {
   int? get page => throw _privateConstructorUsedError;
   List<SingleMovieDto> get results => throw _privateConstructorUsedError;
   int? get totalPages => throw _privateConstructorUsedError;
@@ -27,15 +27,14 @@ mixin _$TopRatedDto {
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
-  $TopRatedDtoCopyWith<TopRatedDto> get copyWith =>
+  $MovieDtoCopyWith<MovieDto> get copyWith =>
       throw _privateConstructorUsedError;
 }
 
 /// @nodoc
-abstract class $TopRatedDtoCopyWith<$Res> {
-  factory $TopRatedDtoCopyWith(
-          TopRatedDto value, $Res Function(TopRatedDto) then) =
-      _$TopRatedDtoCopyWithImpl<$Res>;
+abstract class $MovieDtoCopyWith<$Res> {
+  factory $MovieDtoCopyWith(MovieDto value, $Res Function(MovieDto) then) =
+      _$MovieDtoCopyWithImpl<$Res>;
   $Res call(
       {int? page,
       List<SingleMovieDto> results,
@@ -44,12 +43,12 @@ abstract class $TopRatedDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$TopRatedDtoCopyWithImpl<$Res> implements $TopRatedDtoCopyWith<$Res> {
-  _$TopRatedDtoCopyWithImpl(this._value, this._then);
+class _$MovieDtoCopyWithImpl<$Res> implements $MovieDtoCopyWith<$Res> {
+  _$MovieDtoCopyWithImpl(this._value, this._then);
 
-  final TopRatedDto _value;
+  final MovieDto _value;
   // ignore: unused_field
-  final $Res Function(TopRatedDto) _then;
+  final $Res Function(MovieDto) _then;
 
   @override
   $Res call({
@@ -80,11 +79,10 @@ class _$TopRatedDtoCopyWithImpl<$Res> implements $TopRatedDtoCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$$_TopRatedDtoCopyWith<$Res>
-    implements $TopRatedDtoCopyWith<$Res> {
-  factory _$$_TopRatedDtoCopyWith(
-          _$_TopRatedDto value, $Res Function(_$_TopRatedDto) then) =
-      __$$_TopRatedDtoCopyWithImpl<$Res>;
+abstract class _$$_MovieDtoCopyWith<$Res> implements $MovieDtoCopyWith<$Res> {
+  factory _$$_MovieDtoCopyWith(
+          _$_MovieDto value, $Res Function(_$_MovieDto) then) =
+      __$$_MovieDtoCopyWithImpl<$Res>;
   @override
   $Res call(
       {int? page,
@@ -94,14 +92,14 @@ abstract class _$$_TopRatedDtoCopyWith<$Res>
 }
 
 /// @nodoc
-class __$$_TopRatedDtoCopyWithImpl<$Res> extends _$TopRatedDtoCopyWithImpl<$Res>
-    implements _$$_TopRatedDtoCopyWith<$Res> {
-  __$$_TopRatedDtoCopyWithImpl(
-      _$_TopRatedDto _value, $Res Function(_$_TopRatedDto) _then)
-      : super(_value, (v) => _then(v as _$_TopRatedDto));
+class __$$_MovieDtoCopyWithImpl<$Res> extends _$MovieDtoCopyWithImpl<$Res>
+    implements _$$_MovieDtoCopyWith<$Res> {
+  __$$_MovieDtoCopyWithImpl(
+      _$_MovieDto _value, $Res Function(_$_MovieDto) _then)
+      : super(_value, (v) => _then(v as _$_MovieDto));
 
   @override
-  _$_TopRatedDto get _value => super._value as _$_TopRatedDto;
+  _$_MovieDto get _value => super._value as _$_MovieDto;
 
   @override
   $Res call({
@@ -110,7 +108,7 @@ class __$$_TopRatedDtoCopyWithImpl<$Res> extends _$TopRatedDtoCopyWithImpl<$Res>
     Object? totalPages = freezed,
     Object? totalResults = freezed,
   }) {
-    return _then(_$_TopRatedDto(
+    return _then(_$_MovieDto(
       page: page == freezed
           ? _value.page
           : page // ignore: cast_nullable_to_non_nullable
@@ -133,16 +131,16 @@ class __$$_TopRatedDtoCopyWithImpl<$Res> extends _$TopRatedDtoCopyWithImpl<$Res>
 
 /// @nodoc
 @JsonSerializable()
-class _$_TopRatedDto implements _TopRatedDto {
-  const _$_TopRatedDto(
+class _$_MovieDto implements _MovieDto {
+  const _$_MovieDto(
       {this.page,
       required final List<SingleMovieDto> results,
       this.totalPages,
       this.totalResults})
       : _results = results;
 
-  factory _$_TopRatedDto.fromJson(Map<String, dynamic> json) =>
-      _$$_TopRatedDtoFromJson(json);
+  factory _$_MovieDto.fromJson(Map<String, dynamic> json) =>
+      _$$_MovieDtoFromJson(json);
 
   @override
   final int? page;
@@ -160,14 +158,14 @@ class _$_TopRatedDto implements _TopRatedDto {
 
   @override
   String toString() {
-    return 'TopRatedDto(page: $page, results: $results, totalPages: $totalPages, totalResults: $totalResults)';
+    return 'MovieDto(page: $page, results: $results, totalPages: $totalPages, totalResults: $totalResults)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other.runtimeType == runtimeType &&
-            other is _$_TopRatedDto &&
+            other is _$_MovieDto &&
             const DeepCollectionEquality().equals(other.page, page) &&
             const DeepCollectionEquality().equals(other._results, _results) &&
             const DeepCollectionEquality()
@@ -187,26 +185,25 @@ class _$_TopRatedDto implements _TopRatedDto {
 
   @JsonKey(ignore: true)
   @override
-  _$$_TopRatedDtoCopyWith<_$_TopRatedDto> get copyWith =>
-      __$$_TopRatedDtoCopyWithImpl<_$_TopRatedDto>(this, _$identity);
+  _$$_MovieDtoCopyWith<_$_MovieDto> get copyWith =>
+      __$$_MovieDtoCopyWithImpl<_$_MovieDto>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$$_TopRatedDtoToJson(
+    return _$$_MovieDtoToJson(
       this,
     );
   }
 }
 
-abstract class _TopRatedDto implements TopRatedDto {
-  const factory _TopRatedDto(
+abstract class _MovieDto implements MovieDto {
+  const factory _MovieDto(
       {final int? page,
       required final List<SingleMovieDto> results,
       final int? totalPages,
-      final int? totalResults}) = _$_TopRatedDto;
+      final int? totalResults}) = _$_MovieDto;
 
-  factory _TopRatedDto.fromJson(Map<String, dynamic> json) =
-      _$_TopRatedDto.fromJson;
+  factory _MovieDto.fromJson(Map<String, dynamic> json) = _$_MovieDto.fromJson;
 
   @override
   int? get page;
@@ -218,6 +215,6 @@ abstract class _TopRatedDto implements TopRatedDto {
   int? get totalResults;
   @override
   @JsonKey(ignore: true)
-  _$$_TopRatedDtoCopyWith<_$_TopRatedDto> get copyWith =>
+  _$$_MovieDtoCopyWith<_$_MovieDto> get copyWith =>
       throw _privateConstructorUsedError;
 }

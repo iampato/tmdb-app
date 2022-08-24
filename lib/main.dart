@@ -8,9 +8,11 @@ import 'package:path_provider/path_provider.dart';
 import 'package:tmdb_app/src/di/setup_providers.dart';
 import 'package:tmdb_app/src/utils/cubit_observer.dart';
 import 'package:tmdb_app/tmdb.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: ".env");
   Bloc.observer = MyBlocObserver();
   HydratedBlocOverrides.runZoned(
     () {},
