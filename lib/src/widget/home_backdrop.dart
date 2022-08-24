@@ -101,161 +101,165 @@ class _HomeBackdropState extends State<HomeBackdrop> {
   }
 
   Widget _buildSuccess(MoviesModel movies) {
-    return Stack(
-      children: [
-        Transform.scale(
-          scale: _scale,
-          child: CachedNetworkImage(
-            imageUrl: movies.results![_index].largeBackdropImageUrl,
-            height: double.infinity,
-            width: double.infinity,
-            colorBlendMode: BlendMode.darken,
-            color: Colors.black.withAlpha(50),
-            fit: BoxFit.cover,
+    return AnimatedSwitcher(
+      duration: const Duration(milliseconds: 500),
+      key: ValueKey(_index),
+      child: Stack(
+        children: [
+          Transform.scale(
+            scale: _scale,
+            child: CachedNetworkImage(
+              imageUrl: movies.results![_index].largeBackdropImageUrl,
+              height: double.infinity,
+              width: double.infinity,
+              colorBlendMode: BlendMode.darken,
+              color: Colors.black.withAlpha(50),
+              fit: BoxFit.cover,
+            ),
           ),
-        ),
-        Container(
-          decoration: BoxDecoration(
-            color: Colors.black.withAlpha(100),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Transform.translate(
-                offset: Offset(
-                  (_offset * 10) * -Adapt.setWidth(30),
-                  0,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Adapt.setWidth(15),
+          Container(
+            decoration: BoxDecoration(
+              color: Colors.black.withAlpha(100),
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Transform.translate(
+                  offset: Offset(
+                    (_offset * 10) * -Adapt.setWidth(30),
+                    0,
                   ),
-                  child: Text(
-                    //"Murder on the orient express",
-                    movies.results![_index].title?.trim() ?? "",
-                    style: TextStyle(
-                      fontSize: Adapt.sp(28),
-                      color: Colors.white70,
-                      fontWeight: FontWeight.w700,
-                      height: 0.95,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(15),
+                    ),
+                    child: Text(
+                      //"Murder on the orient express",
+                      movies.results![_index].title?.trim() ?? "",
+                      style: TextStyle(
+                        fontSize: Adapt.sp(28),
+                        color: Colors.white70,
+                        fontWeight: FontWeight.w700,
+                        height: 0.95,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Transform.translate(
-                offset: Offset(
-                  (_offset * 10) * Adapt.setWidth(50),
-                  0,
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Adapt.setWidth(15),
-                    vertical: Adapt.setHeight(10),
+                Transform.translate(
+                  offset: Offset(
+                    (_offset * 10) * Adapt.setWidth(50),
+                    0,
                   ),
-                  child: Row(
-                    children: [
-                      Row(
-                        children: [1, 2, 4, 3, 5].map((e) {
-                          return const Icon(
-                            Icons.star,
-                            size: 20,
-                            color: Colors.red,
-                          );
-                        }).toList(),
-                      ),
-                      SizedBox(
-                        width: Adapt.setWidth(10),
-                      ),
-                      Text(
-                        "${movies.results![_index].voteCount} Votes",
-                        style: TextStyle(
-                          fontSize: Adapt.sp(14.5),
-                          color: Colors.white70,
-                          fontWeight: FontWeight.w700,
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(15),
+                      vertical: Adapt.setHeight(10),
+                    ),
+                    child: Row(
+                      children: [
+                        Row(
+                          children: [1, 2, 4, 3, 5].map((e) {
+                            return const Icon(
+                              Icons.star,
+                              size: 20,
+                              color: Colors.red,
+                            );
+                          }).toList(),
                         ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-              Transform.translate(
-                offset: Offset(
-                  0,
-                  (_offset * 10) * Adapt.setHeight(50),
-                ),
-                child: Padding(
-                  padding: EdgeInsets.symmetric(
-                    horizontal: Adapt.setWidth(15),
-                  ),
-                  child: Row(
-                    children: [
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white54,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
+                        SizedBox(
+                          width: Adapt.setWidth(10),
                         ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Adapt.setWidth(10),
-                          vertical: Adapt.setWidth(5),
-                        ),
-                        child: Text(
-                          "THRILLER",
+                        Text(
+                          "${movies.results![_index].voteCount} Votes",
                           style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: Adapt.sp(10),
+                            fontSize: Adapt.sp(14.5),
+                            color: Colors.white70,
+                            fontWeight: FontWeight.w700,
                           ),
                         ),
-                      ),
-                      SizedBox(
-                        width: Adapt.setWidth(10),
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          border: Border.all(
-                            color: Colors.white54,
-                          ),
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        padding: EdgeInsets.symmetric(
-                          horizontal: Adapt.setWidth(10),
-                          vertical: Adapt.setWidth(5),
-                        ),
-                        child: Text(
-                          "ACTION",
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: Adapt.sp(10),
-                          ),
-                        ),
-                      )
-                    ],
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: Adapt.setHeight(30),
-              ),
-            ],
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.only(
-            top: Adapt.padTopH() * 0.9,
-          ),
-          child: SizedBox(
-            height: kToolbarHeight,
-            child: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.transparent,
-              centerTitle: true,
-              title: const Text("TMDB APP"),
+                Transform.translate(
+                  offset: Offset(
+                    0,
+                    (_offset * 10) * Adapt.setHeight(50),
+                  ),
+                  child: Padding(
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white54,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Adapt.setWidth(10),
+                            vertical: Adapt.setWidth(5),
+                          ),
+                          child: Text(
+                            "THRILLER",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: Adapt.sp(10),
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          width: Adapt.setWidth(10),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.white54,
+                            ),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: EdgeInsets.symmetric(
+                            horizontal: Adapt.setWidth(10),
+                            vertical: Adapt.setWidth(5),
+                          ),
+                          child: Text(
+                            "ACTION",
+                            style: TextStyle(
+                              color: Colors.white54,
+                              fontSize: Adapt.sp(10),
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: Adapt.setHeight(30),
+                ),
+              ],
             ),
           ),
-        ),
-      ],
+          Padding(
+            padding: EdgeInsets.only(
+              top: Adapt.padTopH() * 0.9,
+            ),
+            child: SizedBox(
+              height: kToolbarHeight,
+              child: AppBar(
+                elevation: 0,
+                backgroundColor: Colors.transparent,
+                centerTitle: true,
+                title: const Text("TMDB APP"),
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }
