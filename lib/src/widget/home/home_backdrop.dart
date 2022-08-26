@@ -62,18 +62,18 @@ class _HomeBackdropState extends State<HomeBackdrop> {
           state.maybeWhen(
             orElse: () {},
             success: (movies, __) {
-              _timer = Timer.periodic(
-                const Duration(seconds: 15),
-                (_) {
-                  if (_index != movies.results?.length) {
-                    setState(() {
-                      _index++;
-                    });
-                  } else {
-                    _index = 0;
-                  }
-                },
-              );
+              // _timer = Timer.periodic(
+              //   const Duration(seconds: 15),
+              //   (_) {
+              //     if (_index != movies.results!.length - 1) {
+              //       setState(() {
+              //         _index++;
+              //       });
+              //     } else {
+              //       _index = 0;
+              //     }
+              //   },
+              // );
             },
           );
         },
@@ -138,7 +138,7 @@ class _HomeBackdropState extends State<HomeBackdrop> {
                       //"Murder on the orient express",
                       movies.results![_index].title?.trim() ?? "",
                       style: TextStyle(
-                        fontSize: Adapt.sp(28),
+                        fontSize: Adapt.sp(24),
                         color: Colors.white70,
                         fontWeight: FontWeight.w700,
                         height: 0.95,
@@ -154,7 +154,7 @@ class _HomeBackdropState extends State<HomeBackdrop> {
                   child: Padding(
                     padding: EdgeInsets.symmetric(
                       horizontal: Adapt.setWidth(15),
-                      vertical: Adapt.setHeight(10),
+                      vertical: Adapt.setHeight(7),
                     ),
                     child: Row(
                       children: [
@@ -173,7 +173,7 @@ class _HomeBackdropState extends State<HomeBackdrop> {
                         Text(
                           "${movies.results![_index].voteCount} Votes",
                           style: TextStyle(
-                            fontSize: Adapt.sp(14.5),
+                            fontSize: Adapt.sp(13),
                             color: Colors.white70,
                             fontWeight: FontWeight.w700,
                           ),
