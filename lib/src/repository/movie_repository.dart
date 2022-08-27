@@ -29,9 +29,9 @@ class MovieRepository {
   }
 
   // now playing
-  Future<MovieDto?> nowPlaying() async {
+  Future<MovieDto?> nowPlaying({int page = 1}) async {
     String endpoint =
-        "/now_playing?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=1";
+        "/now_playing?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,

@@ -4,9 +4,10 @@ part of 'upcoming_movies_cubit.dart';
 class UpcomingMoviesState with _$UpcomingMoviesState {
   const factory UpcomingMoviesState.initial() = _Initial;
   const factory UpcomingMoviesState.success({
-    required MoviesModel upcomingMovies,
+    required MoviesModel moviesModel,
     required bool doneFetchingMore,
     required int page,
+    String? message,
   }) = _Success;
   const factory UpcomingMoviesState.error({
     required String message,

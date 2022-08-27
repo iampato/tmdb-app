@@ -1,52 +1,50 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
 import 'package:tmdb_app/src/entities/models/movie_model.dart';
 import 'package:tmdb_app/src/repository/movie_repository.dart';
 
-part 'upcoming_movies_cubit.freezed.dart';
-part 'upcoming_movies_state.dart';
+part 'popular_movies_state.dart';
+part 'popular_movies_cubit.freezed.dart';
 
-class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
+class PopularMoviesCubit extends Cubit<PopularMoviesState> {
   final MovieRepository movieRepository;
-  UpcomingMoviesCubit({
+  PopularMoviesCubit({
     required this.movieRepository,
-  }) : super(const UpcomingMoviesState.initial());
+  }) : super(const PopularMoviesState.initial());
 
-  Future<void> getUpcomingMovies() async {
+  Future<void> getPopularMovies() async {
     state.when(
       initial: () async {
         try {
-          final movies = await movieRepository.upcomingMovies();
+          final movies = await movieRepository.popularMovies();
           if (movies != null) {
             final moviesModels = MoviesModel.fromDto(movies);
-            emit(UpcomingMoviesState.success(
+            emit(PopularMoviesState.success(
               moviesModel: moviesModels,
               doneFetchingMore: movies.page == movies.totalPages,
               page: movies.page ?? 1,
             ));
           } else {
-            emit(const UpcomingMoviesState.error(message: "An error occurred"));
+            emit(const PopularMoviesState.error(message: "An error occurred"));
           }
         } catch (e) {
           if (e is DioError) {
             if (e.type == DioErrorType.connectTimeout ||
                 e.type == DioErrorType.other) {
-              emit(const UpcomingMoviesState.error(
+              emit(const PopularMoviesState.error(
                 message: "Check your internet connection",
               ));
             } else if (e.response != null) {
-              emit(UpcomingMoviesState.error(
+              emit(PopularMoviesState.error(
                 message:
                     e.response?.data["message"] ?? "A server error occurred",
               ));
             } else {
-              emit(
-                  const UpcomingMoviesState.error(message: "An error occured"));
+              emit(const PopularMoviesState.error(message: "An error occured"));
             }
           } else {
-            emit(UpcomingMoviesState.error(message: e.toString()));
+            emit(PopularMoviesState.error(message: e.toString()));
           }
         }
       },
@@ -54,7 +52,7 @@ class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
         // pagination
         if (!doneFetchingMore) {
           // fetch more movies
-          final movies = await movieRepository.upcomingMovies(
+          final movies = await movieRepository.popularMovies(
             page: page + 1,
           );
           if (movies != null) {
@@ -67,13 +65,13 @@ class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
               totalPages: moviesModels.totalPages,
               totalResults: moviesModels.totalResults,
             );
-            emit(UpcomingMoviesState.success(
+            emit(PopularMoviesState.success(
               moviesModel: newMovies,
               doneFetchingMore: newMovies.page == newMovies.totalPages,
               page: newMovies.page ?? 1,
             ));
           } else {
-            emit(UpcomingMoviesState.success(
+            emit(PopularMoviesState.success(
               moviesModel: oldMovies,
               doneFetchingMore: doneFetchingMore,
               page: page,
@@ -81,7 +79,7 @@ class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
             ));
           }
         } else {
-          emit(UpcomingMoviesState.success(
+          emit(PopularMoviesState.success(
             moviesModel: oldMovies,
             doneFetchingMore: doneFetchingMore,
             page: page,
@@ -90,35 +88,34 @@ class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
       },
       error: (_) async {
         try {
-          final movies = await movieRepository.upcomingMovies();
+          final movies = await movieRepository.popularMovies();
           if (movies != null) {
             final moviesModels = MoviesModel.fromDto(movies);
-            emit(UpcomingMoviesState.success(
+            emit(PopularMoviesState.success(
               moviesModel: moviesModels,
               doneFetchingMore: movies.page == movies.totalPages,
               page: movies.page ?? 1,
             ));
           } else {
-            emit(const UpcomingMoviesState.error(message: "An error occurred"));
+            emit(const PopularMoviesState.error(message: "An error occurred"));
           }
         } catch (e) {
           if (e is DioError) {
             if (e.type == DioErrorType.connectTimeout ||
                 e.type == DioErrorType.other) {
-              emit(const UpcomingMoviesState.error(
+              emit(const PopularMoviesState.error(
                 message: "Check your internet connection",
               ));
             } else if (e.response != null) {
-              emit(UpcomingMoviesState.error(
+              emit(PopularMoviesState.error(
                 message:
                     e.response?.data["message"] ?? "A server error occurred",
               ));
             } else {
-              emit(
-                  const UpcomingMoviesState.error(message: "An error occured"));
+              emit(const PopularMoviesState.error(message: "An error occured"));
             }
           } else {
-            emit(UpcomingMoviesState.error(message: e.toString()));
+            emit(PopularMoviesState.error(message: e.toString()));
           }
         }
       },
