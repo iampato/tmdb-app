@@ -24,6 +24,7 @@ class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
             emit(UpcomingMoviesState.success(
               upcomingMovies: moviesModels,
               doneFetchingMore: movies.page == movies.totalPages,
+              page: movies.page ?? 1,
             ));
           } else {
             emit(const UpcomingMoviesState.error(message: "An error occurred"));
@@ -49,7 +50,43 @@ class UpcomingMoviesCubit extends Cubit<UpcomingMoviesState> {
           }
         }
       },
-      success: (movies, doneFetchingMore) {},
+      success: (oldMovies, doneFetchingMore, page) async {
+        // pagination
+        if (!doneFetchingMore) {
+          // fetch more movies
+          final movies = await movieRepository.popularMovies(
+            page: page + 1,
+          );
+          if (movies != null) {
+            final moviesModels = MoviesModel.fromDto(movies);
+            final results = oldMovies.results!;
+            results.addAll(moviesModels.results!);
+            final newMovies = MoviesModel(
+              results: results,
+              page: moviesModels.page,
+              totalPages: moviesModels.totalPages,
+              totalResults: moviesModels.totalResults,
+            );
+            emit(UpcomingMoviesState.success(
+              upcomingMovies: newMovies,
+              doneFetchingMore: newMovies.page == newMovies.totalPages,
+              page: newMovies.page ?? 1,
+            ));
+          } else {
+            emit(UpcomingMoviesState.success(
+              upcomingMovies: oldMovies,
+              doneFetchingMore: doneFetchingMore,
+              page: page,
+            ));
+          }
+        } else {
+          emit(UpcomingMoviesState.success(
+            upcomingMovies: oldMovies,
+            doneFetchingMore: doneFetchingMore,
+            page: page,
+          ));
+        }
+      },
       error: (_) {},
     );
   }

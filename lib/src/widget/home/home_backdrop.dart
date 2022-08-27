@@ -61,7 +61,7 @@ class _HomeBackdropState extends State<HomeBackdrop> {
         listener: (context, state) {
           state.maybeWhen(
             orElse: () {},
-            success: (movies, __) {
+            success: (movies, _, __) {
               // _timer = Timer.periodic(
               //   const Duration(seconds: 15),
               //   (_) {
@@ -79,7 +79,7 @@ class _HomeBackdropState extends State<HomeBackdrop> {
         },
         builder: (context, state) {
           return state.maybeWhen(
-            success: (movies, doneFetchingMore) => _buildSuccess(movies),
+            success: (movies, doneFetchingMore, _) => _buildSuccess(movies),
             error: (message) => _buildError(message),
             orElse: () => _buildLoading(),
           );

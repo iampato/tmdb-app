@@ -55,7 +55,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final endScroll = ((metrics.pixels / metrics.maxScrollExtent) * 100);
     if (endScroll < intialScroll) {
       if (metrics.pixels > 0 && metrics.pixels <= 185) {
-        Future.delayed(const Duration(milliseconds: 100), () {}).then((s) {
+        Future.delayed(const Duration(milliseconds: 10), () {}).then((s) {
           _scrollController.animateTo(
             0,
             duration: const Duration(milliseconds: 300),
@@ -65,9 +65,9 @@ class _HomeScreenState extends State<HomeScreen> {
       }
     } else {
       if (metrics.pixels > 80 && metrics.pixels <= 300) {
-        Future.delayed(const Duration(milliseconds: 100), () {}).then((s) {
+        Future.delayed(const Duration(milliseconds: 10), () {}).then((s) {
           _scrollController.animateTo(
-            300,
+            280,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeIn,
           );

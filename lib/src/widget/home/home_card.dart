@@ -30,7 +30,7 @@ class HomeCard extends StatelessWidget {
             borderRadius: BorderRadius.circular(7),
             child: CachedNetworkImage(
               height: Adapt.screenH() * 0.27,
-              width: Adapt.screenW() * 0.37,
+              width: Adapt.screenW() * 0.39,
               imageUrl: imageUrl,
               fit: BoxFit.cover,
             ),

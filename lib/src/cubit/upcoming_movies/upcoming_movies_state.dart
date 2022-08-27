@@ -6,6 +6,7 @@ class UpcomingMoviesState with _$UpcomingMoviesState {
   const factory UpcomingMoviesState.success({
     required MoviesModel upcomingMovies,
     required bool doneFetchingMore,
+    required int page,
   }) = _Success;
   const factory UpcomingMoviesState.error({
     required String message,

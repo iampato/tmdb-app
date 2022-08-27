@@ -19,7 +19,8 @@ mixin _$UpcomingMoviesState {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)
+    required TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)
         success,
     required TResult Function(String message) error,
   }) =>
@@ -27,7 +28,8 @@ mixin _$UpcomingMoviesState {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
   }) =>
@@ -35,7 +37,8 @@ mixin _$UpcomingMoviesState {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -123,7 +126,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)
+    required TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)
         success,
     required TResult Function(String message) error,
   }) {
@@ -134,7 +138,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
   }) {
@@ -145,7 +150,8 @@ class _$_Initial implements _Initial {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
@@ -200,7 +206,7 @@ abstract class _$$_SuccessCopyWith<$Res> {
   factory _$$_SuccessCopyWith(
           _$_Success value, $Res Function(_$_Success) then) =
       __$$_SuccessCopyWithImpl<$Res>;
-  $Res call({MoviesModel upcomingMovies, bool doneFetchingMore});
+  $Res call({MoviesModel upcomingMovies, bool doneFetchingMore, int page});
 }
 
 /// @nodoc
@@ -217,6 +223,7 @@ class __$$_SuccessCopyWithImpl<$Res>
   $Res call({
     Object? upcomingMovies = freezed,
     Object? doneFetchingMore = freezed,
+    Object? page = freezed,
   }) {
     return _then(_$_Success(
       upcomingMovies: upcomingMovies == freezed
@@ -227,6 +234,10 @@ class __$$_SuccessCopyWithImpl<$Res>
           ? _value.doneFetchingMore
           : doneFetchingMore // ignore: cast_nullable_to_non_nullable
               as bool,
+      page: page == freezed
+          ? _value.page
+          : page // ignore: cast_nullable_to_non_nullable
+              as int,
     ));
   }
 }
@@ -235,16 +246,20 @@ class __$$_SuccessCopyWithImpl<$Res>
 
 class _$_Success implements _Success {
   const _$_Success(
-      {required this.upcomingMovies, required this.doneFetchingMore});
+      {required this.upcomingMovies,
+      required this.doneFetchingMore,
+      required this.page});
 
   @override
   final MoviesModel upcomingMovies;
   @override
   final bool doneFetchingMore;
+  @override
+  final int page;
 
   @override
   String toString() {
-    return 'UpcomingMoviesState.success(upcomingMovies: $upcomingMovies, doneFetchingMore: $doneFetchingMore)';
+    return 'UpcomingMoviesState.success(upcomingMovies: $upcomingMovies, doneFetchingMore: $doneFetchingMore, page: $page)';
   }
 
   @override
@@ -255,14 +270,16 @@ class _$_Success implements _Success {
             const DeepCollectionEquality()
                 .equals(other.upcomingMovies, upcomingMovies) &&
             const DeepCollectionEquality()
-                .equals(other.doneFetchingMore, doneFetchingMore));
+                .equals(other.doneFetchingMore, doneFetchingMore) &&
+            const DeepCollectionEquality().equals(other.page, page));
   }
 
   @override
   int get hashCode => Object.hash(
       runtimeType,
       const DeepCollectionEquality().hash(upcomingMovies),
-      const DeepCollectionEquality().hash(doneFetchingMore));
+      const DeepCollectionEquality().hash(doneFetchingMore),
+      const DeepCollectionEquality().hash(page));
 
   @JsonKey(ignore: true)
   @override
@@ -273,35 +290,38 @@ class _$_Success implements _Success {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)
+    required TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)
         success,
     required TResult Function(String message) error,
   }) {
-    return success(upcomingMovies, doneFetchingMore);
+    return success(upcomingMovies, doneFetchingMore, page);
   }
 
   @override
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
   }) {
-    return success?.call(upcomingMovies, doneFetchingMore);
+    return success?.call(upcomingMovies, doneFetchingMore, page);
   }
 
   @override
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
   }) {
     if (success != null) {
-      return success(upcomingMovies, doneFetchingMore);
+      return success(upcomingMovies, doneFetchingMore, page);
     }
     return orElse();
   }
@@ -344,10 +364,12 @@ class _$_Success implements _Success {
 abstract class _Success implements UpcomingMoviesState {
   const factory _Success(
       {required final MoviesModel upcomingMovies,
-      required final bool doneFetchingMore}) = _$_Success;
+      required final bool doneFetchingMore,
+      required final int page}) = _$_Success;
 
   MoviesModel get upcomingMovies;
   bool get doneFetchingMore;
+  int get page;
   @JsonKey(ignore: true)
   _$$_SuccessCopyWith<_$_Success> get copyWith =>
       throw _privateConstructorUsedError;
@@ -417,7 +439,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult when<TResult extends Object?>({
     required TResult Function() initial,
-    required TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)
+    required TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)
         success,
     required TResult Function(String message) error,
   }) {
@@ -428,7 +451,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult? whenOrNull<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
   }) {
@@ -439,7 +463,8 @@ class _$_Error implements _Error {
   @optionalTypeArgs
   TResult maybeWhen<TResult extends Object?>({
     TResult Function()? initial,
-    TResult Function(MoviesModel upcomingMovies, bool doneFetchingMore)?
+    TResult Function(
+            MoviesModel upcomingMovies, bool doneFetchingMore, int page)?
         success,
     TResult Function(String message)? error,
     required TResult orElse(),
