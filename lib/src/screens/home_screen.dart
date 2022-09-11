@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -7,6 +6,9 @@ import 'package:tmdb_app/src/styles/adapt.dart';
 import 'package:tmdb_app/src/widget/home/home_backdrop.dart';
 import 'package:tmdb_app/src/widget/home/home_card.dart';
 import 'package:tmdb_app/src/widget/home/home_item.dart';
+import 'package:tmdb_app/src/widget/home/now_playing.dart';
+import 'package:tmdb_app/src/widget/home/popular_movies.dart';
+import 'package:tmdb_app/src/widget/home/top_rated_movies.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -103,6 +105,9 @@ class _HomeScreenState extends State<HomeScreen> {
               },
               child: SingleChildScrollView(
                 controller: _scrollController,
+                padding: EdgeInsets.only(
+                  bottom: Adapt.setHeight(25),
+                ),
                 child: Column(
                   children: [
                     SizedBox(height: Adapt.setHeight(383)),
@@ -114,92 +119,11 @@ class _HomeScreenState extends State<HomeScreen> {
                           topRight: Radius.circular(Adapt.setWidth(20)),
                         ),
                       ),
-                      // padding: EdgeInsets.only(
-                      //   top: Adapt.padTopH(),
-                      // ),
                       child: Column(
-                        children: [
-                          HomeItem(
-                            title: "Movies on Theaters",
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                ListMoviesScreen.routeName,
-                              );
-                            },
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children:
-                                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                                  return HomeCard(
-                                    imageUrl:
-                                        "https://picsum.photos/id/${e * 34}/300/300",
-                                    title: "Moonlight",
-                                    voteAverage: 0,
-                                    voteCount: 124,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                          HomeItem(
-                            title: "Movies on Theaters",
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                ListMoviesScreen.routeName,
-                              );
-                            },
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children:
-                                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                                  return HomeCard(
-                                    imageUrl:
-                                        "https://picsum.photos/id/${e * 34}/300/300",
-                                    title: "Moonlight",
-                                    voteAverage: 0,
-                                    voteCount: 124,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                          HomeItem(
-                            title: "Movies on Theaters",
-                            onPressed: () {
-                              Navigator.pushNamed(
-                                context,
-                                ListMoviesScreen.routeName,
-                              );
-                            },
-                            child: SingleChildScrollView(
-                              scrollDirection: Axis.horizontal,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children:
-                                    [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                                  return HomeCard(
-                                    imageUrl:
-                                        "https://picsum.photos/id/${e * 34}/300/300",
-                                    title: "Moonlight",
-                                    voteAverage: 0,
-                                    voteCount: 124,
-                                  );
-                                }).toList(),
-                              ),
-                            ),
-                          ),
-                          SizedBox(
-                            height: Adapt.setHeight(20),
-                          ),
+                        children: const [
+                          NowPlaying(),
+                          PopularMovies(),
+                          TopRatedMovies(),
                         ],
                       ),
                     ),

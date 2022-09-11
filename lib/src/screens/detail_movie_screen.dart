@@ -5,7 +5,7 @@ import 'package:tmdb_app/src/styles/adapt.dart';
 class DetailMovieScreen extends StatefulWidget {
   const DetailMovieScreen({Key? key}) : super(key: key);
 
-  static const routeName = "/detail-movies";
+  static const routeName = "detail-movies";
 
   @override
   State<DetailMovieScreen> createState() => _DetailMovieScreenState();

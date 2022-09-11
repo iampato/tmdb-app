@@ -13,7 +13,7 @@ class TopRatedMoviesCubit extends Cubit<TopRatedMoviesState> {
     required this.movieRepository,
   }) : super(const TopRatedMoviesState.initial());
 
-   Future<void> getPopularMovies() async {
+   Future<void> getTopRatedMovies() async {
     state.when(
       initial: () async {
         try {

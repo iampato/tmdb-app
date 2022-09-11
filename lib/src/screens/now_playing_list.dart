@@ -1,19 +1,19 @@
+
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:tmdb_app/src/screens/detail_movie_screen.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 
-class ListMoviesScreen extends StatefulWidget {
-  const ListMoviesScreen({Key? key}) : super(key: key);
-
-  static const routeName = "list-movies";
+class NowPlayingList extends StatefulWidget {
+  const NowPlayingList({super.key});
 
   @override
-  State<ListMoviesScreen> createState() => _ListMoviesScreenState();
+  State<NowPlayingList> createState() => _NowPlayingListState();
 }
 
-class _ListMoviesScreenState extends State<ListMoviesScreen> {
+class _NowPlayingListState extends State<NowPlayingList> {
   final _scrollThreshold = 200.0;
 
   @override

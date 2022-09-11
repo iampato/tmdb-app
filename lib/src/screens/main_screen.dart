@@ -6,7 +6,7 @@ import 'package:tmdb_app/src/screens/search_screen.dart';
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
-  static const routeName = "/";
+  static const routeName = "main";
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -33,7 +33,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         onTap: _changeIndex,
         currentIndex: _currentIndex,
         elevation: 0,

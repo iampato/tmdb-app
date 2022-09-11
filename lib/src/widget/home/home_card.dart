@@ -40,11 +40,15 @@ class HomeCard extends StatelessWidget {
               top: Adapt.setHeight(7),
               bottom: Adapt.setHeight(3),
             ),
-            child: Text(
-              title,
-              style: TextStyle(
-                fontSize: Adapt.sp(15),
-                fontWeight: FontWeight.w600,
+            child: LimitedBox(
+              maxWidth: Adapt.screenW() * 0.36,
+              child: Text(
+                title,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: Adapt.sp(15),
+                  fontWeight: FontWeight.w600,
+                ),
               ),
             ),
           ),
