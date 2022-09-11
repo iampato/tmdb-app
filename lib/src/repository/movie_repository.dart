@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:tmdb_app/src/entities/dto/genres_dto.dart';
 import 'package:tmdb_app/src/entities/dto/movie_credit_dto.dart';
 import 'package:tmdb_app/src/entities/dto/movie_dto.dart';
 import 'package:tmdb_app/src/entities/dto/single_movie_dto.dart';
@@ -20,6 +21,25 @@ class MovieRepository {
       if (response.statusCode == 200) {
         final movie = MovieCreditsDto.fromJson(response.data);
         return movie;
+      } else {
+        return null;
+      }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  // get movie genres
+  Future<GenresDto?> getMovieGenres() async {
+    String endpoint =
+        "/genre/movie/list?api_key=${AppConfig.getConfig().apiKey}&language=en-US";
+    try {
+      Response response = await _httpNetworkUtil.getRequest(
+        endpoint,
+      );
+      if (response.statusCode == 200) {
+        final genres = GenresDto.fromJson(response.data);
+        return genres;
       } else {
         return null;
       }
