@@ -1,11 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-import 'package:tmdb_app/src/screens/list_movies_screen.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 import 'package:tmdb_app/src/widget/home/home_backdrop.dart';
-import 'package:tmdb_app/src/widget/home/home_card.dart';
-import 'package:tmdb_app/src/widget/home/home_item.dart';
 import 'package:tmdb_app/src/widget/home/now_playing.dart';
 import 'package:tmdb_app/src/widget/home/popular_movies.dart';
 import 'package:tmdb_app/src/widget/home/top_rated_movies.dart';

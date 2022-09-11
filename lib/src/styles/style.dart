@@ -10,6 +10,10 @@ class Durations {
   static const Duration medium = Duration(milliseconds: 350);
 
   static const Duration slow = Duration(milliseconds: 700);
+
+  static const Duration slower = Duration(milliseconds: 1000);
+
+  static const Duration pagination = Duration(milliseconds: 1500);
 }
 
 // class Fonts {

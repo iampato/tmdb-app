@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-
+import 'package:shimmer/shimmer.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 
 class HomeCard extends StatelessWidget {
@@ -33,6 +33,18 @@ class HomeCard extends StatelessWidget {
               width: Adapt.screenW() * 0.39,
               imageUrl: imageUrl,
               fit: BoxFit.cover,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(
+                      Adapt.setWidth(10),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           Padding(

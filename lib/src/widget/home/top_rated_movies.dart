@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tmdb_app/src/cubit/top_rated_movies/top_rated_movies_cubit.dart';
-import 'package:tmdb_app/src/screens/list_movies_screen.dart';
+import 'package:tmdb_app/src/screens/toprated_movies_list.dart';
 import 'package:tmdb_app/src/widget/home/home_card.dart';
 import 'package:tmdb_app/src/widget/home/home_item.dart';
 
@@ -13,10 +14,7 @@ class TopRatedMovies extends StatelessWidget {
     return HomeItem(
       title: "Top rated Movies",
       onPressed: () {
-        Navigator.pushNamed(
-          context,
-          ListMoviesScreen.routeName,
-        );
+        GoRouter.of(context).pushNamed(TopRatedMoviesList.routeName);
       },
       child: BlocBuilder<TopRatedMoviesCubit, TopRatedMoviesState>(
         builder: (context, state) {

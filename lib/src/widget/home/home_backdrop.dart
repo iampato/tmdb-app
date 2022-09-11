@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tmdb_app/src/cubit/upcoming_movies/upcoming_movies_cubit.dart';
 import 'package:tmdb_app/src/entities/models/movie_model.dart';
 
@@ -115,6 +116,18 @@ class _HomeBackdropState extends State<HomeBackdrop> {
               colorBlendMode: BlendMode.darken,
               color: Colors.black.withAlpha(50),
               fit: BoxFit.cover,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(
+                      Adapt.setWidth(10),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
           Container(

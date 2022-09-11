@@ -1,6 +1,7 @@
 import 'package:bloc/bloc.dart';
 import 'package:dio/dio.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:logger/logger.dart';
 import 'package:tmdb_app/src/entities/models/movie_model.dart';
 import 'package:tmdb_app/src/repository/movie_repository.dart';
 
@@ -52,6 +53,7 @@ class NowPlayingCubit extends Cubit<NowPlayingState> {
         // pagination
         if (!doneFetchingMore) {
           // fetch more movies
+          Logger().i("Page: ${page + 1}");
           final movies = await movieRepository.nowPlaying(
             page: page + 1,
           );

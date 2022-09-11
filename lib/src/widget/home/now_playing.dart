@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tmdb_app/src/cubit/now_playing/now_playing_cubit.dart';
-import 'package:tmdb_app/src/screens/list_movies_screen.dart';
+import 'package:tmdb_app/src/screens/now_playing_list.dart';
 import 'package:tmdb_app/src/widget/home/home_card.dart';
 import 'package:tmdb_app/src/widget/home/home_item.dart';
 
@@ -13,10 +14,7 @@ class NowPlaying extends StatelessWidget {
     return HomeItem(
       title: "Movies on Theaters",
       onPressed: () {
-        Navigator.pushNamed(
-          context,
-          ListMoviesScreen.routeName,
-        );
+        GoRouter.of(context).pushNamed(NowPlayingList.routeName);
       },
       child: BlocBuilder<NowPlayingCubit, NowPlayingState>(
         builder: (context, state) {

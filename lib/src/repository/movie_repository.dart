@@ -108,7 +108,7 @@ class MovieRepository {
   Future<MovieDto?> trendingMovies({int page = 1}) async {
     String endpoint =
         "/trending/movie?api_key=${AppConfig.getConfig().apiKey}&page=$page";
-        // "/trending/all/week?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+    // "/trending/all/week?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,

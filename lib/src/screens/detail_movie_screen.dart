@@ -1,9 +1,16 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shimmer/shimmer.dart';
+import 'package:tmdb_app/src/cubit/movie_credit/movie_credit_cubit.dart';
+import 'package:tmdb_app/src/cubit/movie_details/movie_details_cubit.dart';
+import 'package:tmdb_app/src/entities/models/movie_model.dart';
+import 'package:tmdb_app/src/repository/movie_repository.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 
 class DetailMovieScreen extends StatefulWidget {
-  const DetailMovieScreen({Key? key}) : super(key: key);
+  final Results movie;
+  const DetailMovieScreen({Key? key, required this.movie}) : super(key: key);
 
   static const routeName = "detail-movies";
 
@@ -12,8 +19,12 @@ class DetailMovieScreen extends StatefulWidget {
 }
 
 class _DetailMovieScreenState extends State<DetailMovieScreen> {
+  Results get movie => widget.movie;
   late ScrollController _scrollController;
+  late MovieDetailsCubit _movieDetailsCubit;
+  late MovieCreditCubit _movieCreditCubit;
   double _offset = 0;
+
   @override
   void initState() {
     _scrollController = ScrollController()
@@ -27,6 +38,18 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
         }
         setState(() {});
       });
+    _movieDetailsCubit = MovieDetailsCubit(
+      movieRepository: RepositoryProvider.of<MovieRepository>(context),
+    );
+    _movieCreditCubit = MovieCreditCubit(
+      movieRepository: RepositoryProvider.of<MovieRepository>(context),
+    );
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (mounted) {
+        _movieDetailsCubit.getMovieDetails(id: movie.id ?? 1);
+        _movieCreditCubit.getMovieCredits(id: movie.id ?? 1);
+      }
+    });
     super.initState();
   }
 
@@ -38,7 +61,6 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
     return Scaffold(
       body: NestedScrollView(
         controller: _scrollController,
@@ -57,6 +79,8 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                 child: Padding(
                   padding: const EdgeInsets.only(
                     left: 12,
+                    top: 4,
+                    bottom: 4,
                   ),
                   child: Container(
                     decoration: BoxDecoration(
@@ -105,127 +129,9 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
               backgroundColor: Colors.transparent,
               flexibleSpace: FlexibleSpaceBar(
                 collapseMode: CollapseMode.pin,
-                background: Stack(
-                  children: [
-                    CachedNetworkImage(
-                      imageUrl: "https://picsum.photos/id/34/600",
-                      height: double.infinity,
-                      width: double.infinity,
-                      fit: BoxFit.cover,
-                      color: Colors.black.withAlpha(100),
-                      colorBlendMode: BlendMode.darken,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Container(
-                        height: Adapt.setHeight(120),
-                        width: double.infinity,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topCenter,
-                            end: Alignment.bottomCenter,
-                            stops: const [0.0, 0.85],
-                            colors: [
-                              theme.scaffoldBackgroundColor.withOpacity(0.0),
-                              theme.scaffoldBackgroundColor,
-                            ],
-                          ),
-                        ),
-                      ),
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Adapt.setWidth(15),
-                          ),
-                          child: Text(
-                            "Murder on the orient express",
-                            style: TextStyle(
-                              fontSize: Adapt.sp(32),
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              height: 0.95,
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Adapt.setWidth(15),
-                            vertical: Adapt.setHeight(12),
-                          ),
-                          child: Row(
-                            children: [
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black54,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Adapt.setWidth(10),
-                                  vertical: Adapt.setWidth(5),
-                                ),
-                                child: Text(
-                                  "THRILLER",
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: Adapt.sp(10),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: Adapt.setWidth(10),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black54,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Adapt.setWidth(10),
-                                  vertical: Adapt.setWidth(5),
-                                ),
-                                child: Text(
-                                  "ACTION",
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: Adapt.sp(10),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(
-                                width: Adapt.setWidth(10),
-                              ),
-                              Container(
-                                decoration: BoxDecoration(
-                                  border: Border.all(
-                                    color: Colors.black54,
-                                  ),
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                padding: EdgeInsets.symmetric(
-                                  horizontal: Adapt.setWidth(10),
-                                  vertical: Adapt.setWidth(5),
-                                ),
-                                child: Text(
-                                  "HISTORY",
-                                  style: TextStyle(
-                                    color: Colors.black54,
-                                    fontSize: Adapt.sp(10),
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
+                background: DetailBackDrop(
+                  imageUrl: movie.largeBackdropImageUrl,
+                  title: movie.title ?? "",
                 ),
               ),
             ),
@@ -537,6 +443,19 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                                 width: Adapt.setWidth(115),
                                 imageUrl:
                                     "https://picsum.photos/id/${e * 34}/300/300",
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(
+                                        Adapt.setWidth(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                                 fit: BoxFit.cover,
                               ),
                             ),
@@ -619,6 +538,19 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                                 imageUrl:
                                     "https://picsum.photos/id/${e * 14}/300/300",
                                 fit: BoxFit.cover,
+                                placeholder: (context, url) =>
+                                    Shimmer.fromColors(
+                                  baseColor: Colors.grey[300]!,
+                                  highlightColor: Colors.grey[100]!,
+                                  child: Container(
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      borderRadius: BorderRadius.circular(
+                                        Adapt.setWidth(10),
+                                      ),
+                                    ),
+                                  ),
+                                ),
                               ),
                             ),
                             Padding(
@@ -648,6 +580,155 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
           ),
         ),
       ),
+    );
+  }
+}
+
+class DetailBackDrop extends StatelessWidget {
+  final String imageUrl;
+  final String title;
+  const DetailBackDrop({
+    Key? key,
+    required this.imageUrl,
+    required this.title,
+  }) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+    return Stack(
+      children: [
+        CachedNetworkImage(
+          imageUrl: imageUrl,
+          height: double.infinity,
+          width: double.infinity,
+          fit: BoxFit.cover,
+          color: Colors.black.withAlpha(100),
+          colorBlendMode: BlendMode.darken,
+          placeholder: (context, url) => Shimmer.fromColors(
+            baseColor: Colors.grey[300]!,
+            highlightColor: Colors.grey[100]!,
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.red,
+                borderRadius: BorderRadius.circular(
+                  Adapt.setWidth(10),
+                ),
+              ),
+            ),
+          ),
+        ),
+        Align(
+          alignment: Alignment.bottomCenter,
+          child: Container(
+            height: Adapt.setHeight(120),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                stops: const [0.0, 0.85],
+                colors: [
+                  theme.scaffoldBackgroundColor.withOpacity(0.0),
+                  theme.scaffoldBackgroundColor,
+                ],
+              ),
+            ),
+          ),
+        ),
+        Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Adapt.setWidth(15),
+              ),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: Adapt.sp(32),
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                  height: 0.95,
+                ),
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                horizontal: Adapt.setWidth(15),
+                vertical: Adapt.setHeight(12),
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black54,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(10),
+                      vertical: Adapt.setWidth(5),
+                    ),
+                    child: Text(
+                      "THRILLER",
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: Adapt.sp(10),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: Adapt.setWidth(10),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black54,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(10),
+                      vertical: Adapt.setWidth(5),
+                    ),
+                    child: Text(
+                      "ACTION",
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: Adapt.sp(10),
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: Adapt.setWidth(10),
+                  ),
+                  Container(
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black54,
+                      ),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    padding: EdgeInsets.symmetric(
+                      horizontal: Adapt.setWidth(10),
+                      vertical: Adapt.setWidth(5),
+                    ),
+                    child: Text(
+                      "HISTORY",
+                      style: TextStyle(
+                        color: Colors.black54,
+                        fontSize: Adapt.sp(10),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            ),
+          ],
+        ),
+      ],
     );
   }
 }

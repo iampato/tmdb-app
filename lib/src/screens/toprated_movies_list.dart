@@ -1,38 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:tmdb_app/src/cubit/now_playing/now_playing_cubit.dart';
+import 'package:tmdb_app/src/cubit/top_rated_movies/top_rated_movies_cubit.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 import 'package:tmdb_app/src/styles/style.dart';
 import 'package:tmdb_app/src/utils/debounce_util.dart';
 import 'package:tmdb_app/src/widget/bottom_loader.dart';
-import 'package:tmdb_app/src/widget/list/list_movie_item.dart';
 import 'package:tmdb_app/src/widget/list/movie_list_body.dart';
 
-class NowPlayingList extends StatefulWidget {
-  const NowPlayingList({super.key});
+import '../widget/list/list_movie_item.dart';
 
-  static const routeName = 'now_playing_list';
+class TopRatedMoviesList extends StatefulWidget {
+  const TopRatedMoviesList({super.key});
+
+  static const routeName = 'toprated_movies_list';
 
   @override
-  State<NowPlayingList> createState() => _NowPlayingListState();
+  State<TopRatedMoviesList> createState() => _TopRatedMoviesListState();
 }
 
-class _NowPlayingListState extends State<NowPlayingList> {
+class _TopRatedMoviesListState extends State<TopRatedMoviesList> {
   void _onPagination() {
     // debounce
     DebounceUtil.debounce(
       'now_playing_paginator',
       Durations.pagination,
-      () => context.read<NowPlayingCubit>().getNowPlayingMovies(),
+      () => context.read<TopRatedMoviesCubit>().getTopRatedMovies(),
     );
   }
 
   @override
   Widget build(BuildContext context) {
     return MovieListBody(
-      title: 'Showing in the theater',
+      title: 'Top rated Movies',
       onFetchMore: _onPagination,
-      body: BlocConsumer<NowPlayingCubit, NowPlayingState>(
+      body: BlocConsumer<TopRatedMoviesCubit, TopRatedMoviesState>(
         listener: (context, state) {},
         builder: (context, state) {
           return state.when(

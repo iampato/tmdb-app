@@ -13,7 +13,7 @@ class TopRatedMoviesCubit extends Cubit<TopRatedMoviesState> {
     required this.movieRepository,
   }) : super(const TopRatedMoviesState.initial());
 
-   Future<void> getTopRatedMovies() async {
+  Future<void> getTopRatedMovies() async {
     state.when(
       initial: () async {
         try {
@@ -41,7 +41,8 @@ class TopRatedMoviesCubit extends Cubit<TopRatedMoviesState> {
                     e.response?.data["message"] ?? "A server error occurred",
               ));
             } else {
-              emit(const TopRatedMoviesState.error(message: "An error occured"));
+              emit(
+                  const TopRatedMoviesState.error(message: "An error occured"));
             }
           } else {
             emit(TopRatedMoviesState.error(message: e.toString()));
@@ -112,7 +113,8 @@ class TopRatedMoviesCubit extends Cubit<TopRatedMoviesState> {
                     e.response?.data["message"] ?? "A server error occurred",
               ));
             } else {
-              emit(const TopRatedMoviesState.error(message: "An error occured"));
+              emit(
+                  const TopRatedMoviesState.error(message: "An error occured"));
             }
           } else {
             emit(TopRatedMoviesState.error(message: e.toString()));

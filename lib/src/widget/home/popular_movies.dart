@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:tmdb_app/src/cubit/popular_movies/popular_movies_cubit.dart';
-import 'package:tmdb_app/src/screens/list_movies_screen.dart';
+import 'package:tmdb_app/src/screens/popular_movies_list.dart';
 import 'package:tmdb_app/src/widget/home/home_card.dart';
 import 'package:tmdb_app/src/widget/home/home_item.dart';
 
@@ -13,10 +14,7 @@ class PopularMovies extends StatelessWidget {
     return HomeItem(
       title: "Popular Movies",
       onPressed: () {
-        Navigator.pushNamed(
-          context,
-          ListMoviesScreen.routeName,
-        );
+        GoRouter.of(context).pushNamed(PopularMoviesList.routeName);
       },
       child: BlocBuilder<PopularMoviesCubit, PopularMoviesState>(
         builder: (context, state) {

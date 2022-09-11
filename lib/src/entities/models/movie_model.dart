@@ -1,4 +1,5 @@
 import 'package:tmdb_app/src/entities/dto/movie_dto.dart';
+import 'package:tmdb_app/src/entities/dto/single_movie_dto.dart';
 import 'package:tmdb_app/src/utils/app_config.dart';
 
 class MoviesModel {
@@ -113,6 +114,22 @@ class Results {
     video = json['video'];
     voteAverage = json['vote_average'];
     voteCount = json['vote_count'];
+  }
+
+  Results.fromDto(SingleMovieDto e) {
+    adult = e.adult;
+    backdropPath = e.backdropPath;
+    id = e.id;
+    originalLanguage = e.originalLanguage;
+    originalTitle = e.originalTitle;
+    overview = e.overview;
+    popularity = e.popularity;
+    posterPath = e.posterPath;
+    releaseDate = e.releaseDate;
+    title = e.title;
+    video = e.video;
+    voteAverage = e.voteAverage;
+    voteCount = e.voteCount;
   }
 
   Map<String, dynamic> toJson() {

@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shimmer/shimmer.dart';
 import 'package:tmdb_app/src/screens/detail_movie_screen.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 
@@ -55,6 +56,18 @@ class _BookmarksScreenState extends State<BookmarksScreen> {
                     // width: Adapt.setWidth(130),
                     imageUrl: "https://picsum.photos/id/${index * 12}/300/300",
                     fit: BoxFit.cover,
+                    placeholder: (context, url) => Shimmer.fromColors(
+                      baseColor: Colors.grey[300]!,
+                      highlightColor: Colors.grey[100]!,
+                      child: Container(
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(
+                            Adapt.setWidth(10),
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ),
                 Positioned(
