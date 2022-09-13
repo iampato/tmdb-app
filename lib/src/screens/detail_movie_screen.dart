@@ -7,6 +7,9 @@ import 'package:tmdb_app/src/cubit/movie_details/movie_details_cubit.dart';
 import 'package:tmdb_app/src/entities/models/movie_model.dart';
 import 'package:tmdb_app/src/repository/movie_repository.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
+import 'package:tmdb_app/src/widget/detail/cast_and_crew.dart';
+import 'package:tmdb_app/src/widget/detail/detail_backdrop.dart';
+import 'package:tmdb_app/src/widget/detail/similar_movies_widget.dart';
 
 class DetailMovieScreen extends StatefulWidget {
   final Results movie;
@@ -21,8 +24,6 @@ class DetailMovieScreen extends StatefulWidget {
 class _DetailMovieScreenState extends State<DetailMovieScreen> {
   Results get movie => widget.movie;
   late ScrollController _scrollController;
-  late MovieDetailsCubit _movieDetailsCubit;
-  late MovieCreditCubit _movieCreditCubit;
   double _offset = 0;
 
   @override
@@ -38,18 +39,6 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
         }
         setState(() {});
       });
-    _movieDetailsCubit = MovieDetailsCubit(
-      movieRepository: RepositoryProvider.of<MovieRepository>(context),
-    );
-    _movieCreditCubit = MovieCreditCubit(
-      movieRepository: RepositoryProvider.of<MovieRepository>(context),
-    );
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      if (mounted) {
-        _movieDetailsCubit.getMovieDetails(id: movie.id ?? 1);
-        _movieCreditCubit.getMovieCredits(id: movie.id ?? 1);
-      }
-    });
     super.initState();
   }
 
@@ -141,10 +130,10 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Divider(
-                endIndent: Adapt.setWidth(15),
-                indent: Adapt.setWidth(15),
-              ),
+              // Divider(
+              //   endIndent: Adapt.setWidth(15),
+              //   indent: Adapt.setWidth(15),
+              // ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: Adapt.setHeight(10),
@@ -155,7 +144,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                     Flexible(
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
-                        children: [
+                        children: const [
                           Text(
                             "9.4",
                             style: TextStyle(
@@ -233,8 +222,20 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                       child: CachedNetworkImage(
                         height: Adapt.setHeight(160),
                         width: Adapt.setWidth(125),
-                        imageUrl: "https://picsum.photos/id/108/300/300",
+                        imageUrl: movie.largePosterImageUrl,
                         fit: BoxFit.cover,
+                        placeholder: (context, url) => Shimmer.fromColors(
+                          baseColor: Colors.grey[300]!,
+                          highlightColor: Colors.grey[100]!,
+                          child: Container(
+                            decoration: BoxDecoration(
+                              color: Colors.red,
+                              borderRadius: BorderRadius.circular(
+                                Adapt.setWidth(10),
+                              ),
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                     SizedBox(
@@ -258,7 +259,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                                 ),
                               ),
                               Text(
-                                "Moonlight",
+                                movie.title ?? "",
                                 style: TextStyle(
                                   fontSize: Adapt.sp(13),
                                   fontWeight: FontWeight.w700,
@@ -391,7 +392,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                   opacity: 0.7,
                   duration: const Duration(milliseconds: 500),
                   child: Text(
-                    "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.",
+                    movie.overview ?? "",
                     style: TextStyle(
                       fontSize: Adapt.sp(14),
                       height: 1.3,
@@ -403,332 +404,21 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                 endIndent: Adapt.setWidth(15),
                 indent: Adapt.setWidth(15),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Adapt.setWidth(15),
-                  right: Adapt.setWidth(15),
-                  top: Adapt.setHeight(15),
-                ),
-                child: Text(
-                  "Full Cast & Crew",
-                  style: TextStyle(
-                    fontSize: Adapt.sp(16),
-                    color: Colors.black,
-                    fontWeight: FontWeight.bold,
-                    height: 0.95,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(
-                  horizontal: Adapt.setWidth(15),
-                  vertical: Adapt.setHeight(15),
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          right: Adapt.setWidth(12),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(7),
-                              child: CachedNetworkImage(
-                                height: Adapt.setHeight(115),
-                                width: Adapt.setWidth(115),
-                                imageUrl:
-                                    "https://picsum.photos/id/${e * 34}/300/300",
-                                placeholder: (context, url) =>
-                                    Shimmer.fromColors(
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(
-                                        Adapt.setWidth(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                fit: BoxFit.cover,
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: Adapt.setHeight(7),
-                                bottom: Adapt.setHeight(3),
-                              ),
-                              child: SizedBox(
-                                width: Adapt.setWidth(115),
-                                child: Text(
-                                  "Fionn Whitehead",
-                                  style: TextStyle(
-                                    fontSize: Adapt.sp(14),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
+              CastAndCrew(
+                id: movie.id,
               ),
               Divider(
                 endIndent: Adapt.setWidth(15),
                 indent: Adapt.setWidth(15),
               ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Adapt.setWidth(15),
-                  right: Adapt.setWidth(15),
-                  top: Adapt.setHeight(15),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Text(
-                      "Similar Movies",
-                      style: TextStyle(
-                        fontSize: Adapt.sp(16),
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        height: 0.95,
-                      ),
-                    ),
-                    TextButton(
-                      onPressed: () {},
-                      child: const Text("See all"),
-                    ),
-                  ],
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  left: Adapt.setWidth(15),
-                  right: Adapt.setWidth(15),
-                  top: Adapt.setHeight(15),
-                  bottom: Adapt.setHeight(30),
-                ),
-                child: SingleChildScrollView(
-                  scrollDirection: Axis.horizontal,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                      return Padding(
-                        padding: EdgeInsets.only(
-                          right: Adapt.setWidth(12),
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(7),
-                              child: CachedNetworkImage(
-                                height: Adapt.setHeight(115),
-                                width: Adapt.setWidth(115),
-                                imageUrl:
-                                    "https://picsum.photos/id/${e * 14}/300/300",
-                                fit: BoxFit.cover,
-                                placeholder: (context, url) =>
-                                    Shimmer.fromColors(
-                                  baseColor: Colors.grey[300]!,
-                                  highlightColor: Colors.grey[100]!,
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      borderRadius: BorderRadius.circular(
-                                        Adapt.setWidth(10),
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.only(
-                                top: Adapt.setHeight(7),
-                                bottom: Adapt.setHeight(3),
-                              ),
-                              child: SizedBox(
-                                width: Adapt.setWidth(115),
-                                child: Text(
-                                  "Memento",
-                                  style: TextStyle(
-                                    fontSize: Adapt.sp(14),
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      );
-                    }).toList(),
-                  ),
-                ),
-              ),
+              SimilarMoviesWidget(
+                id: movie.id,
+                title: movie.title,
+              )
             ],
           ),
         ),
       ),
-    );
-  }
-}
-
-class DetailBackDrop extends StatelessWidget {
-  final String imageUrl;
-  final String title;
-  const DetailBackDrop({
-    Key? key,
-    required this.imageUrl,
-    required this.title,
-  }) : super(key: key);
-  @override
-  Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
-    return Stack(
-      children: [
-        CachedNetworkImage(
-          imageUrl: imageUrl,
-          height: double.infinity,
-          width: double.infinity,
-          fit: BoxFit.cover,
-          color: Colors.black.withAlpha(100),
-          colorBlendMode: BlendMode.darken,
-          placeholder: (context, url) => Shimmer.fromColors(
-            baseColor: Colors.grey[300]!,
-            highlightColor: Colors.grey[100]!,
-            child: Container(
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(
-                  Adapt.setWidth(10),
-                ),
-              ),
-            ),
-          ),
-        ),
-        Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            height: Adapt.setHeight(120),
-            width: double.infinity,
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                stops: const [0.0, 0.85],
-                colors: [
-                  theme.scaffoldBackgroundColor.withOpacity(0.0),
-                  theme.scaffoldBackgroundColor,
-                ],
-              ),
-            ),
-          ),
-        ),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Adapt.setWidth(15),
-              ),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: Adapt.sp(32),
-                  color: Colors.black,
-                  fontWeight: FontWeight.bold,
-                  height: 0.95,
-                ),
-              ),
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: Adapt.setWidth(15),
-                vertical: Adapt.setHeight(12),
-              ),
-              child: Row(
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black54,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Adapt.setWidth(10),
-                      vertical: Adapt.setWidth(5),
-                    ),
-                    child: Text(
-                      "THRILLER",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: Adapt.sp(10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: Adapt.setWidth(10),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black54,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Adapt.setWidth(10),
-                      vertical: Adapt.setWidth(5),
-                    ),
-                    child: Text(
-                      "ACTION",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: Adapt.sp(10),
-                      ),
-                    ),
-                  ),
-                  SizedBox(
-                    width: Adapt.setWidth(10),
-                  ),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(
-                        color: Colors.black54,
-                      ),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding: EdgeInsets.symmetric(
-                      horizontal: Adapt.setWidth(10),
-                      vertical: Adapt.setWidth(5),
-                    ),
-                    child: Text(
-                      "HISTORY",
-                      style: TextStyle(
-                        color: Colors.black54,
-                        fontSize: Adapt.sp(10),
-                      ),
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

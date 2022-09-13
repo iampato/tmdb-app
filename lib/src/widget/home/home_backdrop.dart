@@ -63,18 +63,18 @@ class _HomeBackdropState extends State<HomeBackdrop> {
           state.maybeWhen(
             orElse: () {},
             success: (movies, _, __, ___) {
-              // _timer = Timer.periodic(
-              //   const Duration(seconds: 15),
-              //   (_) {
-              //     if (_index != movies.results!.length - 1) {
-              //       setState(() {
-              //         _index++;
-              //       });
-              //     } else {
-              //       _index = 0;
-              //     }
-              //   },
-              // );
+              _timer = Timer.periodic(
+                const Duration(seconds: 10),
+                (_) {
+                  if (_index != movies.results!.length - 1) {
+                    setState(() {
+                      _index++;
+                    });
+                  } else {
+                    _index = 0;
+                  }
+                },
+              );
             },
           );
         },

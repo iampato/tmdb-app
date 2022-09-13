@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:logger/logger.dart';
 import 'package:tmdb_app/src/entities/dto/genres_dto.dart';
 import 'package:tmdb_app/src/entities/dto/movie_credit_dto.dart';
 import 'package:tmdb_app/src/entities/dto/movie_dto.dart';
@@ -164,12 +165,11 @@ class MovieRepository {
   }
 
   // similiar
-  Future<MovieDto?> similiarMovies({
-    required int page,
-    required int movieId,
-  }) async {
+  Future<MovieDto?> similiarMovies({required int movieId, int page = 1}) async {
     String endpoint =
-        "/$movieId/similiar?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+        "/$movieId/similar?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+
+    Logger().i(endpoint);
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,

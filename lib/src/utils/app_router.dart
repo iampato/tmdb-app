@@ -7,6 +7,7 @@ import 'package:tmdb_app/src/screens/now_playing_list.dart';
 import 'package:tmdb_app/src/screens/popular_movies_list.dart';
 import 'package:tmdb_app/src/screens/toprated_movies_list.dart';
 import 'package:tmdb_app/src/utils/page_route_transition.dart';
+import 'package:tmdb_app/src/widget/detail/similar_movies_list.dart';
 
 GoRouter router = GoRouter(
   routes: [
@@ -69,6 +70,25 @@ GoRouter router = GoRouter(
         restorationId: state.pageKey.value,
         child: DetailMovieScreen(
           movie: (state.extra as Results),
+        ),
+      ),
+    ),
+    GoRoute(
+      name: SimilarMoviesList.routeName,
+      path: '/${SimilarMoviesList.routeName}',
+      pageBuilder: (context, state) => CustomTransitionPage<void>(
+        key: state.pageKey,
+        restorationId: state.pageKey.value,
+        child: SimilarMoviesList(
+          movieId: int.parse(state.queryParams['movieId'] ?? "1"),
+          title: state.queryParams['title']!,
+        ),
+        transitionsBuilder: (context, animation, secondaryAnimation, child) =>
+            PageTransitions.slideUp(
+          context,
+          animation,
+          secondaryAnimation,
+          child,
         ),
       ),
     ),

@@ -119,8 +119,8 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: const [
                           NowPlaying(),
-                          PopularMovies(),
                           TopRatedMovies(),
+                          PopularMovies(),
                         ],
                       ),
                     ),
