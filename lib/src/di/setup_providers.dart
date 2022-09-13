@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tmdb_app/src/cubit/movie_genres/movie_genres_cubit.dart';
 import 'package:tmdb_app/src/cubit/now_playing/now_playing_cubit.dart';
 import 'package:tmdb_app/src/cubit/popular_movies/popular_movies_cubit.dart';
 import 'package:tmdb_app/src/cubit/theme/theme_cubit.dart';
@@ -58,6 +59,14 @@ Widget setupProviders(Widget child) {
           return TopRatedMoviesCubit(
             movieRepository: RepositoryProvider.of<MovieRepository>(context),
           )..getTopRatedMovies();
+        },
+      ),
+      // movie genres
+      BlocProvider(
+        create: (context) {
+          return MovieGenresCubit(
+            movieRepository: RepositoryProvider.of<MovieRepository>(context),
+          )..getMoviesGenres();
         },
       ),
     ],
