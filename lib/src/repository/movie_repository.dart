@@ -14,7 +14,7 @@ class MovieRepository {
   // movie credits
   Future<MovieCreditsDto?> getMovieCredits({required int movieId}) async {
     String endpoint =
-        "/$movieId/credits?api_key=${AppConfig.getConfig().apiKey}&language=en-US";
+        "/movie/$movieId/credits?api_key=${AppConfig.getConfig().apiKey}&language=en-US";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,
@@ -39,7 +39,9 @@ class MovieRepository {
         endpoint,
       );
       if (response.statusCode == 200) {
+        Logger().d(response.data);
         final genres = GenresDto.fromJson(response.data);
+        Logger().d(genres);
         return genres;
       } else {
         return null;
@@ -52,7 +54,7 @@ class MovieRepository {
   // now playing
   Future<MovieDto?> nowPlaying({int page = 1}) async {
     String endpoint =
-        "/now_playing?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+        "/movie/now_playing?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,
@@ -71,7 +73,7 @@ class MovieRepository {
   // popular
   Future<MovieDto?> popularMovies({int page = 1}) async {
     String endpoint =
-        "/popular?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+        "/movie/popular?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,
@@ -90,7 +92,7 @@ class MovieRepository {
   // top rated
   Future<MovieDto?> topRateMovies({int page = 1}) async {
     String endpoint =
-        "/top_rated?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+        "/movie/top_rated?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,
@@ -109,7 +111,7 @@ class MovieRepository {
   // single movie
   Future<SingleMovieDto?> getMovieDetail({required int movieId}) async {
     String endpoint =
-        "/$movieId?api_key=${AppConfig.getConfig().apiKey}&language=en-US";
+        "/movie/$movieId?api_key=${AppConfig.getConfig().apiKey}&language=en-US";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,
@@ -128,7 +130,7 @@ class MovieRepository {
   // trending
   Future<MovieDto?> trendingMovies({int page = 1}) async {
     String endpoint =
-        "/trending/movie?api_key=${AppConfig.getConfig().apiKey}&page=$page";
+        "/movie/trending/movie?api_key=${AppConfig.getConfig().apiKey}&page=$page";
     // "/trending/all/week?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
@@ -148,7 +150,7 @@ class MovieRepository {
   // upcoming
   Future<MovieDto?> upcomingMovies({int page = 1}) async {
     String endpoint =
-        "/upcoming?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+        "/movie/upcoming?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,
@@ -167,7 +169,7 @@ class MovieRepository {
   // similiar
   Future<MovieDto?> similiarMovies({required int movieId, int page = 1}) async {
     String endpoint =
-        "/$movieId/similar?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
+        "/movie/$movieId/similar?api_key=${AppConfig.getConfig().apiKey}&language=en-US&page=$page";
 
     Logger().i(endpoint);
     try {
@@ -191,7 +193,7 @@ class MovieRepository {
     required String query,
   }) async {
     String endpoint =
-        "/search/movie?api_key=${AppConfig.getConfig().apiKey}&language=en-US&query=$query&page=$page";
+        "/movie/search/movie?api_key=${AppConfig.getConfig().apiKey}&language=en-US&query=$query&page=$page";
     try {
       Response response = await _httpNetworkUtil.getRequest(
         endpoint,

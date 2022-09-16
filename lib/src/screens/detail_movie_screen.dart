@@ -1,11 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
-import 'package:tmdb_app/src/cubit/movie_credit/movie_credit_cubit.dart';
-import 'package:tmdb_app/src/cubit/movie_details/movie_details_cubit.dart';
 import 'package:tmdb_app/src/entities/models/movie_model.dart';
-import 'package:tmdb_app/src/repository/movie_repository.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 import 'package:tmdb_app/src/widget/detail/cast_and_crew.dart';
 import 'package:tmdb_app/src/widget/detail/detail_backdrop.dart';
@@ -121,6 +117,7 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                 background: DetailBackDrop(
                   imageUrl: movie.largeBackdropImageUrl,
                   title: movie.title ?? "",
+                  genreIds: movie.genreIds,
                 ),
               ),
             ),
@@ -130,10 +127,6 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Divider(
-              //   endIndent: Adapt.setWidth(15),
-              //   indent: Adapt.setWidth(15),
-              // ),
               Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: Adapt.setHeight(10),

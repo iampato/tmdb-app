@@ -1,5 +1,4 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
-import 'dart:convert';
 
 part 'single_movie_dto.freezed.dart';
 part 'single_movie_dto.g.dart';
@@ -10,7 +9,7 @@ class SingleMovieDto with _$SingleMovieDto {
     bool? adult,
     @JsonKey(name: 'backdrop_path') String? backdropPath,
     int? budget,
-    List<Genre>? genres,
+    @JsonKey(name: 'genre_ids') List<int>? genres,
     String? homepage,
     int? id,
     @JsonKey(name: 'imdb_id') String? imdbId,
@@ -39,15 +38,15 @@ class SingleMovieDto with _$SingleMovieDto {
       _$SingleMovieDtoFromJson(json);
 }
 
-@freezed
-class Genre with _$Genre {
-  const factory Genre({
-    int? id,
-    String? name,
-  }) = _Genre;
+// @freezed
+// class Genre with _$Genre {
+//   const factory Genre({
+//     int? id,
+//     String? name,
+//   }) = _Genre;
 
-  factory Genre.fromJson(Map<String, dynamic> json) => _$GenreFromJson(json);
-}
+//   factory Genre.fromJson(Map<String, dynamic> json) => _$GenreFromJson(json);
+// }
 
 @freezed
 class ProductionCompany with _$ProductionCompany {

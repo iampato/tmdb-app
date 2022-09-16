@@ -24,7 +24,8 @@ mixin _$SingleMovieDto {
   @JsonKey(name: 'backdrop_path')
   String? get backdropPath => throw _privateConstructorUsedError;
   int? get budget => throw _privateConstructorUsedError;
-  List<Genre>? get genres => throw _privateConstructorUsedError;
+  @JsonKey(name: 'genre_ids')
+  List<int>? get genres => throw _privateConstructorUsedError;
   String? get homepage => throw _privateConstructorUsedError;
   int? get id => throw _privateConstructorUsedError;
   @JsonKey(name: 'imdb_id')
@@ -75,7 +76,8 @@ abstract class $SingleMovieDtoCopyWith<$Res> {
       @JsonKey(name: 'backdrop_path')
           String? backdropPath,
       int? budget,
-      List<Genre>? genres,
+      @JsonKey(name: 'genre_ids')
+          List<int>? genres,
       String? homepage,
       int? id,
       @JsonKey(name: 'imdb_id')
@@ -160,7 +162,7 @@ class _$SingleMovieDtoCopyWithImpl<$Res>
       genres: genres == freezed
           ? _value.genres
           : genres // ignore: cast_nullable_to_non_nullable
-              as List<Genre>?,
+              as List<int>?,
       homepage: homepage == freezed
           ? _value.homepage
           : homepage // ignore: cast_nullable_to_non_nullable
@@ -257,7 +259,8 @@ abstract class _$$_SingleMovieDtoCopyWith<$Res>
       @JsonKey(name: 'backdrop_path')
           String? backdropPath,
       int? budget,
-      List<Genre>? genres,
+      @JsonKey(name: 'genre_ids')
+          List<int>? genres,
       String? homepage,
       int? id,
       @JsonKey(name: 'imdb_id')
@@ -344,7 +347,7 @@ class __$$_SingleMovieDtoCopyWithImpl<$Res>
       genres: genres == freezed
           ? _value._genres
           : genres // ignore: cast_nullable_to_non_nullable
-              as List<Genre>?,
+              as List<int>?,
       homepage: homepage == freezed
           ? _value.homepage
           : homepage // ignore: cast_nullable_to_non_nullable
@@ -437,7 +440,8 @@ class _$_SingleMovieDto implements _SingleMovieDto {
       @JsonKey(name: 'backdrop_path')
           this.backdropPath,
       this.budget,
-      final List<Genre>? genres,
+      @JsonKey(name: 'genre_ids')
+          final List<int>? genres,
       this.homepage,
       this.id,
       @JsonKey(name: 'imdb_id')
@@ -483,9 +487,10 @@ class _$_SingleMovieDto implements _SingleMovieDto {
   final String? backdropPath;
   @override
   final int? budget;
-  final List<Genre>? _genres;
+  final List<int>? _genres;
   @override
-  List<Genre>? get genres {
+  @JsonKey(name: 'genre_ids')
+  List<int>? get genres {
     final value = _genres;
     if (value == null) return null;
     // ignore: implicit_dynamic_type
@@ -659,7 +664,8 @@ abstract class _SingleMovieDto implements SingleMovieDto {
       @JsonKey(name: 'backdrop_path')
           final String? backdropPath,
       final int? budget,
-      final List<Genre>? genres,
+      @JsonKey(name: 'genre_ids')
+          final List<int>? genres,
       final String? homepage,
       final int? id,
       @JsonKey(name: 'imdb_id')
@@ -702,7 +708,8 @@ abstract class _SingleMovieDto implements SingleMovieDto {
   @override
   int? get budget;
   @override
-  List<Genre>? get genres;
+  @JsonKey(name: 'genre_ids')
+  List<int>? get genres;
   @override
   String? get homepage;
   @override
@@ -756,150 +763,6 @@ abstract class _SingleMovieDto implements SingleMovieDto {
   @override
   @JsonKey(ignore: true)
   _$$_SingleMovieDtoCopyWith<_$_SingleMovieDto> get copyWith =>
-      throw _privateConstructorUsedError;
-}
-
-Genre _$GenreFromJson(Map<String, dynamic> json) {
-  return _Genre.fromJson(json);
-}
-
-/// @nodoc
-mixin _$Genre {
-  int? get id => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-
-  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
-  @JsonKey(ignore: true)
-  $GenreCopyWith<Genre> get copyWith => throw _privateConstructorUsedError;
-}
-
-/// @nodoc
-abstract class $GenreCopyWith<$Res> {
-  factory $GenreCopyWith(Genre value, $Res Function(Genre) then) =
-      _$GenreCopyWithImpl<$Res>;
-  $Res call({int? id, String? name});
-}
-
-/// @nodoc
-class _$GenreCopyWithImpl<$Res> implements $GenreCopyWith<$Res> {
-  _$GenreCopyWithImpl(this._value, this._then);
-
-  final Genre _value;
-  // ignore: unused_field
-  final $Res Function(Genre) _then;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-  }) {
-    return _then(_value.copyWith(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-abstract class _$$_GenreCopyWith<$Res> implements $GenreCopyWith<$Res> {
-  factory _$$_GenreCopyWith(_$_Genre value, $Res Function(_$_Genre) then) =
-      __$$_GenreCopyWithImpl<$Res>;
-  @override
-  $Res call({int? id, String? name});
-}
-
-/// @nodoc
-class __$$_GenreCopyWithImpl<$Res> extends _$GenreCopyWithImpl<$Res>
-    implements _$$_GenreCopyWith<$Res> {
-  __$$_GenreCopyWithImpl(_$_Genre _value, $Res Function(_$_Genre) _then)
-      : super(_value, (v) => _then(v as _$_Genre));
-
-  @override
-  _$_Genre get _value => super._value as _$_Genre;
-
-  @override
-  $Res call({
-    Object? id = freezed,
-    Object? name = freezed,
-  }) {
-    return _then(_$_Genre(
-      id: id == freezed
-          ? _value.id
-          : id // ignore: cast_nullable_to_non_nullable
-              as int?,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-    ));
-  }
-}
-
-/// @nodoc
-@JsonSerializable()
-class _$_Genre implements _Genre {
-  const _$_Genre({this.id, this.name});
-
-  factory _$_Genre.fromJson(Map<String, dynamic> json) =>
-      _$$_GenreFromJson(json);
-
-  @override
-  final int? id;
-  @override
-  final String? name;
-
-  @override
-  String toString() {
-    return 'Genre(id: $id, name: $name)';
-  }
-
-  @override
-  bool operator ==(dynamic other) {
-    return identical(this, other) ||
-        (other.runtimeType == runtimeType &&
-            other is _$_Genre &&
-            const DeepCollectionEquality().equals(other.id, id) &&
-            const DeepCollectionEquality().equals(other.name, name));
-  }
-
-  @JsonKey(ignore: true)
-  @override
-  int get hashCode => Object.hash(
-      runtimeType,
-      const DeepCollectionEquality().hash(id),
-      const DeepCollectionEquality().hash(name));
-
-  @JsonKey(ignore: true)
-  @override
-  _$$_GenreCopyWith<_$_Genre> get copyWith =>
-      __$$_GenreCopyWithImpl<_$_Genre>(this, _$identity);
-
-  @override
-  Map<String, dynamic> toJson() {
-    return _$$_GenreToJson(
-      this,
-    );
-  }
-}
-
-abstract class _Genre implements Genre {
-  const factory _Genre({final int? id, final String? name}) = _$_Genre;
-
-  factory _Genre.fromJson(Map<String, dynamic> json) = _$_Genre.fromJson;
-
-  @override
-  int? get id;
-  @override
-  String? get name;
-  @override
-  @JsonKey(ignore: true)
-  _$$_GenreCopyWith<_$_Genre> get copyWith =>
       throw _privateConstructorUsedError;
 }
 

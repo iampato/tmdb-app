@@ -4,10 +4,12 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
+import 'package:tmdb_app/src/cubit/movie_genres/movie_genres_cubit.dart';
 import 'package:tmdb_app/src/cubit/upcoming_movies/upcoming_movies_cubit.dart';
 import 'package:tmdb_app/src/entities/models/movie_model.dart';
 
 import 'package:tmdb_app/src/styles/adapt.dart';
+import 'package:tmdb_app/src/utils/swap_genres.dart';
 
 class HomeBackdrop extends StatefulWidget {
   final double height;
@@ -205,8 +207,9 @@ class _HomeBackdropState extends State<HomeBackdrop> {
                       horizontal: Adapt.setWidth(15),
                     ),
                     child: Row(
-                      children: [
-                        Container(
+                      children: (movies.results?[_index].genreIds ?? [])
+                          .map((genreId) {
+                        return Container(
                           decoration: BoxDecoration(
                             border: Border.all(
                               color: Colors.white54,
@@ -217,37 +220,25 @@ class _HomeBackdropState extends State<HomeBackdrop> {
                             horizontal: Adapt.setWidth(10),
                             vertical: Adapt.setWidth(5),
                           ),
+                          margin: EdgeInsets.only(
+                            right: Adapt.setWidth(10),
+                          ),
                           child: Text(
-                            "THRILLER",
+                            // "THRILLER",
+                            swapGenres(
+                                  genreId: genreId,
+                                  genres: context
+                                      .read<MovieGenresCubit>()
+                                      .movieGenres,
+                                ) ??
+                                "",
                             style: TextStyle(
-                              color: Colors.white54,
+                              color: Colors.white60,
                               fontSize: Adapt.sp(10),
                             ),
                           ),
-                        ),
-                        SizedBox(
-                          width: Adapt.setWidth(10),
-                        ),
-                        Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.white54,
-                            ),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Adapt.setWidth(10),
-                            vertical: Adapt.setWidth(5),
-                          ),
-                          child: Text(
-                            "ACTION",
-                            style: TextStyle(
-                              color: Colors.white54,
-                              fontSize: Adapt.sp(10),
-                            ),
-                          ),
-                        )
-                      ],
+                        );
+                      }).toList(),
                     ),
                   ),
                 ),

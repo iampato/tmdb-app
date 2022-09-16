@@ -29,6 +29,7 @@ class MoviesModel {
         adult: e.adult,
         backdropPath: e.backdropPath,
         id: e.id,
+        genreIds: e.genres,
         originalLanguage: e.originalLanguage,
         originalTitle: e.originalTitle,
         overview: e.overview,

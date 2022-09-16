@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tmdb_app/src/cubit/movie_credit/movie_credit_cubit.dart';
+import 'package:tmdb_app/src/entities/models/movie_credits_model.dart';
 import 'package:tmdb_app/src/repository/movie_repository.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
 
@@ -56,54 +57,7 @@ class CastAndCrew extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: cast!.map((e) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              right: Adapt.setWidth(12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(7),
-                                  child: CachedNetworkImage(
-                                    height: Adapt.setHeight(150),
-                                    width: Adapt.setWidth(110),
-                                    imageUrl: e.profilePicture,
-                                    placeholder: (context, url) =>
-                                        Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.circular(
-                                            Adapt.setWidth(10),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: Adapt.setHeight(7),
-                                    bottom: Adapt.setHeight(3),
-                                  ),
-                                  child: SizedBox(
-                                    width: Adapt.setWidth(115),
-                                    child: Text(
-                                      e.name ?? "",
-                                      style: TextStyle(
-                                        fontSize: Adapt.sp(14),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                          return _buildCard(e);
                         }).toList(),
                       ),
                     ),
@@ -138,54 +92,7 @@ class CastAndCrew extends StatelessWidget {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: crew!.map((e) {
-                          return Padding(
-                            padding: EdgeInsets.only(
-                              right: Adapt.setWidth(12),
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                ClipRRect(
-                                  borderRadius: BorderRadius.circular(7),
-                                  child: CachedNetworkImage(
-                                    height: Adapt.setHeight(150),
-                                    width: Adapt.setWidth(110),
-                                    imageUrl: e.profilePicture,
-                                    placeholder: (context, url) =>
-                                        Shimmer.fromColors(
-                                      baseColor: Colors.grey[300]!,
-                                      highlightColor: Colors.grey[100]!,
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                          color: Colors.red,
-                                          borderRadius: BorderRadius.circular(
-                                            Adapt.setWidth(10),
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(
-                                    top: Adapt.setHeight(7),
-                                    bottom: Adapt.setHeight(3),
-                                  ),
-                                  child: SizedBox(
-                                    width: Adapt.setWidth(115),
-                                    child: Text(
-                                      e.name ?? "",
-                                      style: TextStyle(
-                                        fontSize: Adapt.sp(14),
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          );
+                          return _buildCard(e);
                         }).toList(),
                       ),
                     ),
@@ -195,6 +102,57 @@ class CastAndCrew extends StatelessWidget {
             },
           );
         },
+      ),
+    );
+  }
+
+  Padding _buildCard(Cast e) {
+    return Padding(
+      padding: EdgeInsets.only(
+        right: Adapt.setWidth(12),
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          ClipRRect(
+            borderRadius: BorderRadius.circular(7),
+            child: CachedNetworkImage(
+              height: Adapt.setHeight(150),
+              width: Adapt.setWidth(110),
+              imageUrl: e.profilePicture,
+              placeholder: (context, url) => Shimmer.fromColors(
+                baseColor: Colors.grey[300]!,
+                highlightColor: Colors.grey[100]!,
+                child: Container(
+                  decoration: BoxDecoration(
+                    color: Colors.red,
+                    borderRadius: BorderRadius.circular(
+                      Adapt.setWidth(10),
+                    ),
+                  ),
+                ),
+              ),
+              fit: BoxFit.cover,
+            ),
+          ),
+          Padding(
+            padding: EdgeInsets.only(
+              top: Adapt.setHeight(7),
+              bottom: Adapt.setHeight(3),
+            ),
+            child: SizedBox(
+              width: Adapt.setWidth(115),
+              child: Text(
+                e.name ?? "",
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  fontSize: Adapt.sp(14),
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
