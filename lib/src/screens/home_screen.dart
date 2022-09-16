@@ -1,8 +1,11 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:tmdb_app/src/screens/list_movies_screen.dart';
+import 'package:flutter/services.dart';
+
 import 'package:tmdb_app/src/styles/adapt.dart';
-import 'package:tmdb_app/src/widget/home_backdrop.dart';
+import 'package:tmdb_app/src/widget/home/home_backdrop.dart';
+import 'package:tmdb_app/src/widget/home/now_playing.dart';
+import 'package:tmdb_app/src/widget/home/popular_movies.dart';
+import 'package:tmdb_app/src/widget/home/top_rated_movies.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -51,7 +54,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final endScroll = ((metrics.pixels / metrics.maxScrollExtent) * 100);
     if (endScroll < intialScroll) {
       if (metrics.pixels > 0 && metrics.pixels <= 185) {
-        Future.delayed(const Duration(milliseconds: 100), () {}).then((s) {
+        Future.delayed(const Duration(milliseconds: 10), () {}).then((s) {
           _scrollController.animateTo(
             0,
             duration: const Duration(milliseconds: 300),
@@ -60,10 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
         });
       }
     } else {
-      if (metrics.pixels > 100 && metrics.pixels <= 286) {
-        Future.delayed(const Duration(milliseconds: 100), () {}).then((s) {
+      if (metrics.pixels > 80 && metrics.pixels <= 300) {
+        Future.delayed(const Duration(milliseconds: 10), () {}).then((s) {
           _scrollController.animateTo(
-            286,
+            280,
             duration: const Duration(milliseconds: 300),
             curve: Curves.easeIn,
           );
@@ -74,339 +77,59 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Stack(
-        children: [
-          HomeBackdrop(
-            height: 350,
-            scrollController: _scrollController,
-          ),
-          NotificationListener<ScrollNotification>(
-            onNotification: (scrollNotification) {
-              if (scrollNotification is ScrollStartNotification) {
-                _onStartScroll(scrollNotification.metrics);
-              } else if (scrollNotification is ScrollUpdateNotification) {
-                _onUpdateScroll(scrollNotification.metrics);
-              } else if (scrollNotification is ScrollEndNotification) {
-                _onEndScroll(scrollNotification.metrics);
-              }
-              return false;
-            },
-            child: SingleChildScrollView(
-              controller: _scrollController,
-              child: Column(
-                children: [
-                  SizedBox(height: Adapt.setHeight(329)),
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(Adapt.setWidth(20)),
-                        topRight: Radius.circular(Adapt.setWidth(20)),
+    return AnnotatedRegion<SystemUiOverlayStyle>(
+      value: const SystemUiOverlayStyle(
+        statusBarIconBrightness: Brightness.light,
+        statusBarColor: Colors.transparent,
+      ),
+      child: Scaffold(
+        body: Stack(
+          children: [
+            HomeBackdrop(
+              height: 400,
+              scrollController: _scrollController,
+            ),
+            NotificationListener<ScrollNotification>(
+              onNotification: (scrollNotification) {
+                if (scrollNotification is ScrollStartNotification) {
+                  _onStartScroll(scrollNotification.metrics);
+                } else if (scrollNotification is ScrollUpdateNotification) {
+                  _onUpdateScroll(scrollNotification.metrics);
+                } else if (scrollNotification is ScrollEndNotification) {
+                  _onEndScroll(scrollNotification.metrics);
+                }
+                return false;
+              },
+              child: SingleChildScrollView(
+                controller: _scrollController,
+                padding: EdgeInsets.only(
+                  bottom: Adapt.setHeight(25),
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(height: Adapt.setHeight(383)),
+                    Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(Adapt.setWidth(20)),
+                          topRight: Radius.circular(Adapt.setWidth(20)),
+                        ),
+                      ),
+                      child: Column(
+                        children: const [
+                          NowPlaying(),
+                          TopRatedMovies(),
+                          PopularMovies(),
+                        ],
                       ),
                     ),
-                    padding: EdgeInsets.only(
-                      top: Adapt.padTopH(),
-                    ),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: Adapt.setWidth(15),
-                            right: Adapt.setWidth(15),
-                            bottom: Adapt.setHeight(2),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Movies on theater",
-                                style: TextStyle(
-                                  fontSize: Adapt.sp(17),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(
-                                    context,
-                                    ListMoviesScreen.routeName,
-                                  );
-                                },
-                                child: const Text("SEE ALL"),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Adapt.setWidth(15),
-                          ),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:
-                                  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    right: Adapt.setWidth(15),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(7),
-                                        child: CachedNetworkImage(
-                                          height: Adapt.setHeight(220),
-                                          width: Adapt.setWidth(160),
-                                          imageUrl:
-                                              "https://picsum.photos/id/${e * 34}/300/300",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          top: Adapt.setHeight(7),
-                                          bottom: Adapt.setHeight(3),
-                                        ),
-                                        child: Text(
-                                          "Moonlight",
-                                          style: TextStyle(
-                                            fontSize: Adapt.sp(15),
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Row(
-                                            children: [1, 2, 4, 3, 5].map((e) {
-                                              return const Icon(
-                                                Icons.star,
-                                                size: 14,
-                                                color: Colors.red,
-                                              );
-                                            }).toList(),
-                                          ),
-                                          SizedBox(
-                                            width: Adapt.setWidth(10),
-                                          ),
-                                          Text(
-                                            "189 Reviews",
-                                            style: TextStyle(
-                                              fontSize: Adapt.sp(11),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: Adapt.setWidth(15),
-                            right: Adapt.setWidth(15),
-                            top: Adapt.setHeight(20),
-                            bottom: Adapt.setHeight(2),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Movies on theater",
-                                style: TextStyle(
-                                  fontSize: Adapt.sp(17),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text("SEE ALL"),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Adapt.setWidth(15),
-                          ),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:
-                                  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    right: Adapt.setWidth(15),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(7),
-                                        child: CachedNetworkImage(
-                                          height: Adapt.setHeight(220),
-                                          width: Adapt.setWidth(160),
-                                          imageUrl:
-                                              "https://picsum.photos/id/${e * 63}/300/300",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          top: Adapt.setHeight(7),
-                                          bottom: Adapt.setHeight(3),
-                                        ),
-                                        child: Text(
-                                          "Moonlight",
-                                          style: TextStyle(
-                                            fontSize: Adapt.sp(15),
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Row(
-                                            children: [1, 2, 4, 3, 5].map((e) {
-                                              return const Icon(
-                                                Icons.star,
-                                                size: 14,
-                                                color: Colors.red,
-                                              );
-                                            }).toList(),
-                                          ),
-                                          SizedBox(
-                                            width: Adapt.setWidth(10),
-                                          ),
-                                          Text(
-                                            "189 Reviews",
-                                            style: TextStyle(
-                                              fontSize: Adapt.sp(11),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left: Adapt.setWidth(15),
-                            right: Adapt.setWidth(15),
-                            top: Adapt.setHeight(20),
-                            bottom: Adapt.setHeight(2),
-                          ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Movies on theater",
-                                style: TextStyle(
-                                  fontSize: Adapt.sp(17),
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              TextButton(
-                                onPressed: () {},
-                                child: const Text("SEE ALL"),
-                              ),
-                            ],
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: Adapt.setWidth(15),
-                          ),
-                          child: SingleChildScrollView(
-                            scrollDirection: Axis.horizontal,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children:
-                                  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((e) {
-                                return Padding(
-                                  padding: EdgeInsets.only(
-                                    right: Adapt.setWidth(15),
-                                  ),
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      ClipRRect(
-                                        borderRadius: BorderRadius.circular(7),
-                                        child: CachedNetworkImage(
-                                          height: Adapt.setHeight(220),
-                                          width: Adapt.setWidth(160),
-                                          imageUrl:
-                                              "https://picsum.photos/id/${e * 76}/300/300",
-                                          fit: BoxFit.cover,
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                          top: Adapt.setHeight(7),
-                                          bottom: Adapt.setHeight(3),
-                                        ),
-                                        child: Text(
-                                          "Moonlight",
-                                          style: TextStyle(
-                                            fontSize: Adapt.sp(15),
-                                            fontWeight: FontWeight.w600,
-                                          ),
-                                        ),
-                                      ),
-                                      Row(
-                                        children: [
-                                          Row(
-                                            children: [1, 2, 4, 3, 5].map((e) {
-                                              return const Icon(
-                                                Icons.star,
-                                                size: 14,
-                                                color: Colors.red,
-                                              );
-                                            }).toList(),
-                                          ),
-                                          SizedBox(
-                                            width: Adapt.setWidth(10),
-                                          ),
-                                          Text(
-                                            "189 Reviews",
-                                            style: TextStyle(
-                                              fontSize: Adapt.sp(11),
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: Adapt.setHeight(20),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tmdb_app/src/cubit/movie_genres/movie_genres_cubit.dart';
 import 'package:tmdb_app/src/screens/bookmarks_screen.dart';
 import 'package:tmdb_app/src/screens/home_screen.dart';
 import 'package:tmdb_app/src/screens/search_screen.dart';
@@ -6,7 +8,7 @@ import 'package:tmdb_app/src/screens/search_screen.dart';
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
-  static const routeName = "/";
+  static const routeName = "main";
   @override
   State<MainScreen> createState() => _MainScreenState();
 }
@@ -23,17 +25,21 @@ class _MainScreenState extends State<MainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: IndexedStack(
-        index: _currentIndex,
-        children: const [
-          HomeScreen(),
-          SearchScreen(),
-          BookmarksScreen(),
-        ],
+      body: BlocBuilder<MovieGenresCubit, MovieGenresState>(
+        builder: (context, state) {
+          return IndexedStack(
+            index: _currentIndex,
+            children: const [
+              HomeScreen(),
+              SearchScreen(),
+              BookmarksScreen(),
+            ],
+          );
+        },
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        backgroundColor: Colors.transparent,
+        backgroundColor: Colors.white,
         onTap: _changeIndex,
         currentIndex: _currentIndex,
         elevation: 0,

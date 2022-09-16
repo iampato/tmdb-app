@@ -10,6 +10,10 @@ class Durations {
   static const Duration medium = Duration(milliseconds: 350);
 
   static const Duration slow = Duration(milliseconds: 700);
+
+  static const Duration slower = Duration(milliseconds: 1000);
+
+  static const Duration pagination = Duration(milliseconds: 1500);
 }
 
 // class Fonts {
@@ -95,9 +99,11 @@ class TextStyles {
   // );
   static TextStyle montserrat = GoogleFonts.montserrat();
 
-  static TextStyle get t1 => montserrat.bold.size(FontSizes.s14).letterSpace(.7);
+  static TextStyle get t1 =>
+      montserrat.bold.size(FontSizes.s14).letterSpace(.7);
 
-  static TextStyle get t2 => montserrat.bold.size(FontSizes.s12).letterSpace(.4);
+  static TextStyle get t2 =>
+      montserrat.bold.size(FontSizes.s12).letterSpace(.4);
 
   static TextStyle get h1 => montserrat.bold.size(FontSizes.s14);
 
@@ -122,7 +128,8 @@ class TextStyles {
 
   static TextStyle get footnote => montserrat.bold.size(FontSizes.s11);
 
-  static TextStyle get caption => montserrat.size(FontSizes.s11).letterSpace(.3);
+  static TextStyle get caption =>
+      montserrat.size(FontSizes.s11).letterSpace(.3);
 }
 
 class Shadows {

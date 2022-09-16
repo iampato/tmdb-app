@@ -19,10 +19,10 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(360, 690),
+      designSize: const Size(450, 988),
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
-          return MaterialApp(
+          return MaterialApp.router(
             title: 'Notflix App',
             theme: ThemeData(
               primarySwatch: materialColor,
@@ -66,7 +66,10 @@ class _MyAppState extends State<MyApp> {
                 ),
               );
             },
-            onGenerateRoute: AppRouter.generateRoute,
+            routeInformationProvider: router.routeInformationProvider,
+            routeInformationParser: router.routeInformationParser,
+            routerDelegate: router.routerDelegate,
+            // onGenerateRoute: AppRouter.generateRoute,
           );
         },
       ),
