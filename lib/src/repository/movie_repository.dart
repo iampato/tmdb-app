@@ -39,9 +39,9 @@ class MovieRepository {
         endpoint,
       );
       if (response.statusCode == 200) {
-        Logger().d(response.data);
+        // Logger().d(response.data);
         final genres = GenresDto.fromJson(response.data);
-        Logger().d(genres);
+        // Logger().d(genres);
         return genres;
       } else {
         return null;
@@ -98,7 +98,9 @@ class MovieRepository {
         endpoint,
       );
       if (response.statusCode == 200) {
+        // Logger().d(response.data);
         final movies = MovieDto.fromJson(response.data);
+        // Logger().d(movies.results[0]);
         return movies;
       } else {
         return null;

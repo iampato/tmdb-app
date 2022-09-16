@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:logger/logger.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:shimmer/shimmer.dart';
 import 'package:tmdb_app/src/entities/models/movie_model.dart';
 import 'package:tmdb_app/src/styles/adapt.dart';
@@ -91,7 +93,13 @@ class _DetailMovieScreenState extends State<DetailMovieScreen> {
                         child: IconButton(
                           icon: const Icon(Icons.share),
                           color: Colors.black,
-                          onPressed: () {},
+                          onPressed: () {
+                            if (movie.homepage != null) {
+                              Share.share(movie.homepage!);
+                            } else {
+                              Logger().d("no homepage");
+                            }
+                          },
                         ),
                       ),
                       SizedBox(width: Adapt.setWidth(10)),
